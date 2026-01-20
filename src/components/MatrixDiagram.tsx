@@ -53,7 +53,7 @@ const MatrixDiagram = ({ type, label }: MatrixDiagramProps) => {
           </div>
         </div>
       ) : (
-        // 2x3 Matrix (14 positions total: 2 + 6 + 6 or similar)
+        // 2x3 Matrix (14 positions total: 2 + 4 + 8)
         <div className="flex flex-col items-center gap-2">
           {/* You at the top */}
           <div className="w-10 h-10 rounded-full bg-gradient-gold flex items-center justify-center shadow-gold">
@@ -61,23 +61,27 @@ const MatrixDiagram = ({ type, label }: MatrixDiagramProps) => {
           </div>
           
           {/* Level 1: 2 positions */}
-          <div className="flex gap-6">
+          <div className="flex gap-12">
             {[1, 2].map((i) => (
               <div key={i} className="flex flex-col items-center gap-2">
-                <div className="w-7 h-7 rounded-full border-2 border-primary/60 bg-secondary flex items-center justify-center">
-                  <User className="h-3.5 w-3.5 text-primary/60" />
+                <div className="w-8 h-8 rounded-full border-2 border-primary/60 bg-secondary flex items-center justify-center">
+                  <User className="h-4 w-4 text-primary/60" />
                 </div>
-                {/* Level 2: 3 positions each */}
-                <div className="flex gap-1">
-                  {[1, 2, 3].map((j) => (
+                {/* Level 2: 2 positions each (total 4) */}
+                <div className="flex gap-4">
+                  {[1, 2].map((j) => (
                     <div key={j} className="flex flex-col items-center gap-1">
-                      <div className="w-5 h-5 rounded-full border border-primary/40 bg-secondary/50 flex items-center justify-center">
-                        <User className="h-2.5 w-2.5 text-primary/40" />
+                      <div className="w-6 h-6 rounded-full border border-primary/40 bg-secondary/50 flex items-center justify-center">
+                        <User className="h-3 w-3 text-primary/40" />
                       </div>
-                      {/* Level 3 hint */}
-                      <div className="flex gap-0.5">
-                        <div className="w-2 h-2 rounded-full bg-primary/20" />
-                        <div className="w-2 h-2 rounded-full bg-primary/20" />
+                      {/* Level 3: 2 positions each (total 8) */}
+                      <div className="flex gap-1">
+                        <div className="w-4 h-4 rounded-full border border-primary/30 bg-secondary/30 flex items-center justify-center">
+                          <User className="h-2 w-2 text-primary/30" />
+                        </div>
+                        <div className="w-4 h-4 rounded-full border border-primary/30 bg-secondary/30 flex items-center justify-center">
+                          <User className="h-2 w-2 text-primary/30" />
+                        </div>
                       </div>
                     </div>
                   ))}
