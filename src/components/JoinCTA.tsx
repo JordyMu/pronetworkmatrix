@@ -16,34 +16,34 @@ const JoinCTA = () => {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 mb-8">
             <Sparkles className="h-4 w-4 text-primary" />
             <span className="text-sm text-primary font-medium">
-              Start Your Journey Today
+              Commencez Votre Parcours Aujourd'hui
             </span>
           </div>
 
           {/* Heading */}
           <h2 className="text-4xl md:text-6xl font-serif font-bold mb-6">
-            Ready to{" "}
-            <span className="text-gradient-gold">Transform</span>
+            Prêt à{" "}
+            <span className="text-gradient-gold">Transformer</span>
             <br />
-            Your Life?
+            Votre Vie ?
           </h2>
 
           {/* Description */}
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Join thousands of members who are already building their financial
-            future with ProNetwork. Your success story starts here.
+            Rejoignez des milliers de membres qui construisent déjà leur avenir
+            financier avec ProNetwork. Votre histoire de succès commence ici.
           </p>
 
           {/* Joining Fee Highlight */}
           <div className="inline-block p-6 rounded-2xl bg-gradient-card border border-primary/30 mb-10 shadow-gold animate-pulse-gold">
             <div className="text-sm text-muted-foreground mb-1">
-              Joining Fee
+              Frais d'Adhésion
             </div>
             <div className="text-5xl font-serif font-bold text-gradient-gold">
-              R30
+              30€
             </div>
             <div className="text-xs text-muted-foreground mt-2">
-              One-time payment • Lifetime access
+              Paiement unique • Accès à vie
             </div>
           </div>
 
@@ -53,7 +53,7 @@ const JoinCTA = () => {
               size="lg"
               className="bg-gradient-gold text-primary-foreground font-semibold text-lg px-10 py-7 shadow-gold hover:opacity-90 transition-all hover:scale-105"
             >
-              Join ProNetwork Now
+              Rejoindre ProNetwork
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
@@ -62,12 +62,12 @@ const JoinCTA = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-muted-foreground">
             <div className="flex items-center gap-2">
               <Phone className="h-5 w-5 text-primary" />
-              <span>Call us for more info</span>
+              <span>Appelez-nous pour plus d'infos</span>
             </div>
             <div className="hidden sm:block w-px h-6 bg-border" />
             <div className="flex items-center gap-2">
               <MessageCircle className="h-5 w-5 text-primary" />
-              <span>WhatsApp support available</span>
+              <span>Support WhatsApp disponible</span>
             </div>
           </div>
         </div>

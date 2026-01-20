@@ -18,7 +18,7 @@ const Hero = () => {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 mb-8 animate-fade-in">
             <Sparkles className="h-4 w-4 text-primary" />
             <span className="text-sm text-primary font-medium">
-              Build Your Financial Future
+              Construisez Votre Avenir Financier
             </span>
           </div>
 
@@ -32,14 +32,14 @@ const Hero = () => {
 
           {/* Main Heading */}
           <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-            Welcome to{" "}
+            Bienvenue sur{" "}
             <span className="text-gradient-gold">ProNetwork</span>
           </h1>
 
           {/* Subheading */}
           <p className="text-xl md:text-2xl text-foreground/70 mb-8 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: "0.2s" }}>
-            Join our revolutionary matrix system and unlock unlimited earning
-            potential. Start your journey to financial freedom today.
+            Rejoignez notre système de matrice révolutionnaire et débloquez un
+            potentiel de gains illimité. Commencez votre chemin vers la liberté financière dès aujourd'hui.
           </p>
 
           {/* CTA Buttons */}
@@ -48,7 +48,7 @@ const Hero = () => {
               size="lg"
               className="bg-gradient-gold text-primary-foreground font-semibold text-lg px-8 py-6 shadow-gold hover:opacity-90 transition-all hover:scale-105"
             >
-              Join Now
+              Rejoindre Maintenant
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Button
@@ -56,7 +56,7 @@ const Hero = () => {
               variant="outline"
               className="border-primary/50 text-primary hover:bg-primary/10 text-lg px-8 py-6"
             >
-              View Compensation Plan
+              Voir le Plan de Compensation
             </Button>
           </div>
 
@@ -66,19 +66,19 @@ const Hero = () => {
               <div className="text-3xl md:text-4xl font-serif font-bold text-gradient-gold">
                 7
               </div>
-              <div className="text-sm text-foreground/60 mt-1">Levels</div>
+              <div className="text-sm text-foreground/60 mt-1">Niveaux</div>
             </div>
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-serif font-bold text-gradient-gold">
                 2x2 | 2x3
               </div>
-              <div className="text-sm text-foreground/60 mt-1">Matrix System</div>
+              <div className="text-sm text-foreground/60 mt-1">Système de Matrice</div>
             </div>
             <div className="text-center">
               <div className="text-3xl md:text-4xl font-serif font-bold text-gradient-gold">
                 ∞
               </div>
-              <div className="text-sm text-foreground/60 mt-1">Potential</div>
+              <div className="text-sm text-foreground/60 mt-1">Potentiel</div>
             </div>
           </div>
         </div>

@@ -3,27 +3,27 @@ import { CheckCircle, Rocket, Users, Wallet } from "lucide-react";
 const steps = [
   {
     icon: Wallet,
-    title: "Join the Network",
+    title: "Rejoindre le Réseau",
     description:
-      "Pay the minimal joining fee and become part of the ProNetwork family. Get instant access to your dashboard.",
+      "Payez les frais d'adhésion minimaux et faites partie de la famille ProNetwork. Accédez instantanément à votre tableau de bord.",
   },
   {
     icon: Users,
-    title: "Build Your Team",
+    title: "Construisez Votre Équipe",
     description:
-      "Invite others to join under you. Fill your matrix positions and help your team members do the same.",
+      "Invitez d'autres personnes à vous rejoindre. Remplissez vos positions dans la matrice et aidez vos membres d'équipe à faire de même.",
   },
   {
     icon: Rocket,
-    title: "Level Up",
+    title: "Montez de Niveau",
     description:
-      "Complete each level's matrix to unlock the next. Progress through all 7 levels for maximum earnings.",
+      "Complétez la matrice de chaque niveau pour débloquer le suivant. Progressez à travers les 7 niveaux pour des gains maximum.",
   },
   {
     icon: CheckCircle,
-    title: "Earn Rewards",
+    title: "Gagnez des Récompenses",
     description:
-      "Receive cash bonuses, products, vouchers, and exclusive rewards at every level you complete.",
+      "Recevez des bonus en espèces, des produits, des bons d'achat et des récompenses exclusives à chaque niveau complété.",
   },
 ];
 
@@ -36,11 +36,11 @@ const HowItWorks = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4">
-            How <span className="text-gradient-gold">It Works</span>
+            Comment <span className="text-gradient-gold">Ça Marche</span>
           </h2>
           <p className="text-lg text-muted-foreground">
-            Getting started with ProNetwork is simple. Follow these four steps
-            to begin your journey to financial success.
+            Commencer avec ProNetwork est simple. Suivez ces quatre étapes
+            pour débuter votre parcours vers le succès financier.
           </p>
         </div>
 

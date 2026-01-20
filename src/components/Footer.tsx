@@ -16,22 +16,22 @@ const Footer = () => {
           {/* Links */}
           <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
             <a href="#home" className="hover:text-primary transition-colors">
-              Home
+              Accueil
             </a>
             <a href="#compensation" className="hover:text-primary transition-colors">
-              Compensation Plan
+              Plan de Compensation
             </a>
             <a href="#how-it-works" className="hover:text-primary transition-colors">
-              How It Works
+              Comment ça Marche
             </a>
             <a href="#join" className="hover:text-primary transition-colors">
-              Join Now
+              Rejoindre
             </a>
           </div>
 
           {/* Copyright */}
           <div className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} ProNetwork. All rights reserved.
+            © {new Date().getFullYear()} ProNetwork. Tous droits réservés.
           </div>
         </div>
       </div>
