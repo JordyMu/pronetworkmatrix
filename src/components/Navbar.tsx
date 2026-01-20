@@ -20,23 +20,23 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             <a href="#home" className="text-foreground/80 hover:text-primary transition-colors">
-              Home
+              Accueil
             </a>
             <a href="#compensation" className="text-foreground/80 hover:text-primary transition-colors">
-              Compensation Plan
+              Plan de Compensation
             </a>
             <a href="#how-it-works" className="text-foreground/80 hover:text-primary transition-colors">
-              How It Works
+              Comment ça Marche
             </a>
             <a href="#join" className="text-foreground/80 hover:text-primary transition-colors">
-              Join Now
+              Rejoindre
             </a>
           </div>
 
           {/* CTA Button */}
           <div className="hidden md:block">
             <Button className="bg-gradient-gold text-primary-foreground font-semibold shadow-gold hover:opacity-90 transition-opacity">
-              Get Started
+              Commencer
             </Button>
           </div>
 
@@ -58,31 +58,31 @@ const Navbar = () => {
                 className="text-foreground/80 hover:text-primary transition-colors"
                 onClick={() => setIsOpen(false)}
               >
-                Home
+                Accueil
               </a>
               <a
                 href="#compensation"
                 className="text-foreground/80 hover:text-primary transition-colors"
                 onClick={() => setIsOpen(false)}
               >
-                Compensation Plan
+                Plan de Compensation
               </a>
               <a
                 href="#how-it-works"
                 className="text-foreground/80 hover:text-primary transition-colors"
                 onClick={() => setIsOpen(false)}
               >
-                How It Works
+                Comment ça Marche
               </a>
               <a
                 href="#join"
                 className="text-foreground/80 hover:text-primary transition-colors"
                 onClick={() => setIsOpen(false)}
               >
-                Join Now
+                Rejoindre
               </a>
               <Button className="bg-gradient-gold text-primary-foreground font-semibold w-full">
-                Get Started
+                Commencer
               </Button>
             </div>
           </div>

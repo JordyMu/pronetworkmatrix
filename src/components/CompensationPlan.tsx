@@ -28,7 +28,7 @@ const LevelCard = ({
     >
       {highlight && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-gradient-gold rounded-full text-xs font-semibold text-primary-foreground">
-          Popular
+          Populaire
         </div>
       )}
 
@@ -38,15 +38,15 @@ const LevelCard = ({
         </div>
         <div>
           <h3 className="text-lg font-serif font-semibold text-foreground">
-            Level {level}
+            Niveau {level}
           </h3>
-          <p className="text-sm text-muted-foreground">{matrixType} Matrix</p>
+          <p className="text-sm text-muted-foreground">Matrice {matrixType}</p>
         </div>
       </div>
 
       <div className="space-y-4">
         <div className="flex items-center justify-between p-3 rounded-lg bg-secondary/50">
-          <span className="text-sm text-muted-foreground">Multiplier</span>
+          <span className="text-sm text-muted-foreground">Multiplicateur</span>
           <span className="font-semibold text-primary">{multiplier}</span>
         </div>
 
@@ -54,12 +54,12 @@ const LevelCard = ({
           <div className="text-2xl font-serif font-bold text-gradient-gold">
             {earnings}
           </div>
-          <div className="text-xs text-muted-foreground mt-1">Total Earnings</div>
+          <div className="text-xs text-muted-foreground mt-1">Gains Totaux</div>
         </div>
 
         <div className="space-y-2">
           <div className="text-xs font-semibold text-primary uppercase tracking-wide">
-            Rewards Include:
+            Récompenses Incluses :
           </div>
           <ul className="space-y-1.5">
             {rewards.map((reward, index) => (
@@ -81,51 +81,51 @@ const CompensationPlan = () => {
       level: 1,
       matrixType: "2x2" as const,
       multiplier: "$$ × 6",
-      earnings: "R150",
-      rewards: ["R30 EPINS", "R50 Products"],
+      earnings: "150€",
+      rewards: ["30€ EPINS", "50€ Produits"],
     },
     {
       level: 2,
       matrixType: "2x2" as const,
       multiplier: "$$ × 6",
-      earnings: "R300",
-      rewards: ["R60 EPINS", "R100 Products"],
+      earnings: "300€",
+      rewards: ["60€ EPINS", "100€ Produits"],
     },
     {
       level: 3,
       matrixType: "2x2" as const,
       multiplier: "$$ × 6",
-      earnings: "R700",
-      rewards: ["R500 Gift Voucher/Airtime", "R150 EPINS", "R250 Products"],
+      earnings: "700€",
+      rewards: ["500€ Bon d'Achat/Crédit Téléphone", "150€ EPINS", "250€ Produits"],
       highlight: true,
     },
     {
       level: 4,
       matrixType: "2x2" as const,
       multiplier: "$$ × 6",
-      earnings: "R7,000",
-      rewards: ["R4,000 Grocery Voucher/Laptop", "R300 EPINS", "R500 Products"],
+      earnings: "7 000€",
+      rewards: ["4 000€ Bon Alimentaire/Ordinateur", "300€ EPINS", "500€ Produits"],
     },
     {
       level: 5,
       matrixType: "2x3" as const,
       multiplier: "$$ × 14",
-      earnings: "R70,000",
-      rewards: ["R10,000 Local Trips", "R30,000 Furniture", "R300 EPINS", "R700 Products"],
+      earnings: "70 000€",
+      rewards: ["10 000€ Voyages Locaux", "30 000€ Mobilier", "300€ EPINS", "700€ Produits"],
     },
     {
       level: 6,
       matrixType: "2x3" as const,
       multiplier: "$$ × 14",
-      earnings: "R140,000",
-      rewards: ["R200,000 Car Fund", "R300,000 House Fund", "R1,200 EPINS", "R2,800 Products"],
+      earnings: "140 000€",
+      rewards: ["200 000€ Fonds Voiture", "300 000€ Fonds Maison", "1 200€ EPINS", "2 800€ Produits"],
     },
     {
       level: 7,
       matrixType: "2x3" as const,
       multiplier: "$$ × 14",
-      earnings: "R500,000+",
-      rewards: ["Executive Bonuses", "Leadership Rewards", "Residual Income", "Legacy Building"],
+      earnings: "500 000€+",
+      rewards: ["Bonus Exécutifs", "Récompenses Leadership", "Revenus Résiduels", "Héritage Durable"],
     },
   ];
 
@@ -138,24 +138,24 @@ const CompensationPlan = () => {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 mb-6">
             <TrendingUp className="h-4 w-4 text-primary" />
-            <span className="text-sm text-primary font-medium">7-Level System</span>
+            <span className="text-sm text-primary font-medium">Système à 7 Niveaux</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4">
-            <span className="text-gradient-gold">Compensation</span> Plan
+            Plan de <span className="text-gradient-gold">Compensation</span>
           </h2>
           <p className="text-lg text-muted-foreground">
-            Our unique matrix system rewards you at every level. Start building
-            your network and watch your earnings grow exponentially.
+            Notre système de matrice unique vous récompense à chaque niveau. Commencez à
+            construire votre réseau et regardez vos gains croître de façon exponentielle.
           </p>
         </div>
 
         {/* Matrix Diagrams */}
         <div className="flex flex-col md:flex-row justify-center gap-12 mb-16">
           <div className="p-8 rounded-2xl bg-gradient-card border border-border">
-            <MatrixDiagram type="2x2" label="Levels 1-4: 2×2 Matrix" />
+            <MatrixDiagram type="2x2" label="Niveaux 1-4 : Matrice 2×2" />
           </div>
           <div className="p-8 rounded-2xl bg-gradient-card border border-border">
-            <MatrixDiagram type="2x3" label="Levels 5-7: 2×3 Matrix" />
+            <MatrixDiagram type="2x3" label="Niveaux 5-7 : Matrice 2×3" />
           </div>
         </div>
 
@@ -171,7 +171,7 @@ const CompensationPlan = () => {
           <div className="inline-flex items-center gap-3 p-4 rounded-2xl bg-gradient-card border border-primary/30">
             <Zap className="h-6 w-6 text-primary" />
             <span className="text-foreground">
-              <strong className="text-gradient-gold">Joining Fee:</strong> Only R30 to start!
+              <strong className="text-gradient-gold">Frais d'Adhésion :</strong> Seulement 30€ pour commencer !
             </span>
             <Award className="h-6 w-6 text-primary" />
           </div>
