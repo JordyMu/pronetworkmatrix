@@ -1,9 +1,11 @@
 import { Crown, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { useRegistration } from "@/contexts/RegistrationContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { openRegistration } = useRegistration();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
@@ -28,14 +30,20 @@ const Navbar = () => {
             <a href="#how-it-works" className="text-foreground/80 hover:text-primary transition-colors">
               Comment ça Marche
             </a>
-            <a href="#join" className="text-foreground/80 hover:text-primary transition-colors">
+            <button 
+              onClick={openRegistration}
+              className="text-foreground/80 hover:text-primary transition-colors"
+            >
               Rejoindre
-            </a>
+            </button>
           </div>
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <Button className="bg-gradient-gold text-primary-foreground font-semibold shadow-gold hover:opacity-90 transition-opacity">
+            <Button 
+              onClick={openRegistration}
+              className="bg-gradient-gold text-primary-foreground font-semibold shadow-gold hover:opacity-90 transition-opacity"
+            >
               Commencer
             </Button>
           </div>
@@ -74,14 +82,22 @@ const Navbar = () => {
               >
                 Comment ça Marche
               </a>
-              <a
-                href="#join"
-                className="text-foreground/80 hover:text-primary transition-colors"
-                onClick={() => setIsOpen(false)}
+              <button
+                onClick={() => {
+                  setIsOpen(false);
+                  openRegistration();
+                }}
+                className="text-foreground/80 hover:text-primary transition-colors text-left"
               >
                 Rejoindre
-              </a>
-              <Button className="bg-gradient-gold text-primary-foreground font-semibold w-full">
+              </button>
+              <Button 
+                onClick={() => {
+                  setIsOpen(false);
+                  openRegistration();
+                }}
+                className="bg-gradient-gold text-primary-foreground font-semibold w-full"
+              >
                 Commencer
               </Button>
             </div>

@@ -1,7 +1,10 @@
 import { ArrowRight, MessageCircle, Phone, Sparkles } from "lucide-react";
 import { Button } from "./ui/button";
+import { useRegistration } from "@/contexts/RegistrationContext";
 
 const JoinCTA = () => {
+  const { openRegistration } = useRegistration();
+
   return (
     <section id="join" className="py-24 relative overflow-hidden">
       {/* Background */}
@@ -40,7 +43,7 @@ const JoinCTA = () => {
               Frais d'Adhésion
             </div>
             <div className="text-5xl font-serif font-bold text-gradient-gold">
-              30€
+              5,000 CDF
             </div>
             <div className="text-xs text-muted-foreground mt-2">
               Paiement unique • Accès à vie
@@ -51,6 +54,7 @@ const JoinCTA = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Button
               size="lg"
+              onClick={openRegistration}
               className="bg-gradient-gold text-primary-foreground font-semibold text-lg px-10 py-7 shadow-gold hover:opacity-90 transition-all hover:scale-105"
             >
               Rejoindre ProNetwork
