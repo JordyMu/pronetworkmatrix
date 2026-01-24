@@ -5,7 +5,10 @@ import HowItWorks from "@/components/HowItWorks";
 import JoinCTA from "@/components/JoinCTA";
 import Footer from "@/components/Footer";
 import RegistrationModal from "@/components/RegistrationModal";
-import { RegistrationProvider, useRegistration } from "@/contexts/RegistrationContext";
+import {
+  RegistrationProvider,
+  useRegistration,
+} from "@/contexts/RegistrationContext";
 
 const IndexContent = () => {
   const { isOpen, closeRegistration } = useRegistration();
