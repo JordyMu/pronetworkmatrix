@@ -1,7 +1,10 @@
 import { ArrowRight, Crown, Sparkles } from "lucide-react";
 import { Button } from "./ui/button";
+import { useRegistration } from "@/contexts/RegistrationContext";
 
 const Hero = () => {
+  const { openRegistration } = useRegistration();
+
   return (
     <section
       id="home"
@@ -46,6 +49,7 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in" style={{ animationDelay: "0.3s" }}>
             <Button
               size="lg"
+              onClick={openRegistration}
               className="bg-gradient-gold text-primary-foreground font-semibold text-lg px-8 py-6 shadow-gold hover:opacity-90 transition-all hover:scale-105"
             >
               Rejoindre Maintenant
