@@ -54,6 +54,11 @@ const GenerationCard = ({
       </div>
 
       <div className="space-y-4">
+        {/* Matrix Diagram */}
+        <div className="flex justify-center py-3">
+          <MatrixDiagram type={matrixType} label="" compact />
+        </div>
+
         {/* Description */}
         <p className="text-sm text-foreground/80 leading-relaxed">
           {description}
