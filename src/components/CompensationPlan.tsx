@@ -10,8 +10,19 @@ interface LevelCardProps {
   highlight?: boolean;
 }
 
+interface LevelCardProps {
+  level: number;
+  name: string;
+  matrixType: "2x2" | "2x3";
+  multiplier: string;
+  earnings: string;
+  rewards: string[];
+  highlight?: boolean;
+}
+
 const LevelCard = ({
   level,
+  name,
   matrixType,
   multiplier,
   earnings,
@@ -38,8 +49,9 @@ const LevelCard = ({
         </div>
         <div>
           <h3 className="text-lg font-serif font-semibold text-foreground">
-            Niveau {level}
+            Génération {level}
           </h3>
+          <p className="text-xs text-primary font-medium">{name}</p>
           <p className="text-sm text-muted-foreground">Matrice {matrixType}</p>
         </div>
       </div>
@@ -79,6 +91,7 @@ const CompensationPlan = () => {
   const levels = [
     {
       level: 1,
+      name: "Semeur",
       matrixType: "2x2" as const,
       multiplier: "$$ × 6",
       earnings: "150€",
@@ -86,6 +99,7 @@ const CompensationPlan = () => {
     },
     {
       level: 2,
+      name: "Laboureur",
       matrixType: "2x2" as const,
       multiplier: "$$ × 6",
       earnings: "300€",
@@ -93,6 +107,7 @@ const CompensationPlan = () => {
     },
     {
       level: 3,
+      name: "Récolteur",
       matrixType: "2x2" as const,
       multiplier: "$$ × 6",
       earnings: "700€",
@@ -101,6 +116,7 @@ const CompensationPlan = () => {
     },
     {
       level: 4,
+      name: "Marchand",
       matrixType: "2x2" as const,
       multiplier: "$$ × 6",
       earnings: "7 000€",
@@ -108,6 +124,7 @@ const CompensationPlan = () => {
     },
     {
       level: 5,
+      name: "Commerçant",
       matrixType: "2x3" as const,
       multiplier: "$$ × 14",
       earnings: "70 000€",
@@ -115,6 +132,7 @@ const CompensationPlan = () => {
     },
     {
       level: 6,
+      name: "Entrepreneur",
       matrixType: "2x3" as const,
       multiplier: "$$ × 14",
       earnings: "140 000€",
@@ -122,6 +140,7 @@ const CompensationPlan = () => {
     },
     {
       level: 7,
+      name: "Magnat",
       matrixType: "2x3" as const,
       multiplier: "$$ × 14",
       earnings: "500 000€+",
@@ -136,9 +155,9 @@ const CompensationPlan = () => {
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 mb-6">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 mb-6">
             <TrendingUp className="h-4 w-4 text-primary" />
-            <span className="text-sm text-primary font-medium">Système à 7 Niveaux</span>
+            <span className="text-sm text-primary font-medium">Système à 7 Générations</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4">
             Plan de <span className="text-gradient-gold">Compensation</span>
@@ -152,10 +171,10 @@ const CompensationPlan = () => {
         {/* Matrix Diagrams */}
         <div className="flex flex-col md:flex-row justify-center gap-12 mb-16">
           <div className="p-8 rounded-2xl bg-gradient-card border border-border">
-            <MatrixDiagram type="2x2" label="Niveaux 1-4 : Matrice 2×2" />
+            <MatrixDiagram type="2x2" label="Générations 1-4 : Matrice 2×2" />
           </div>
           <div className="p-8 rounded-2xl bg-gradient-card border border-border">
-            <MatrixDiagram type="2x3" label="Niveaux 5-7 : Matrice 2×3" />
+            <MatrixDiagram type="2x3" label="Générations 5-7 : Matrice 2×3" />
           </div>
         </div>
 
