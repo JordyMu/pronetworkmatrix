@@ -51,6 +51,9 @@ const MatrixDiagram = ({ type, label }: MatrixDiagramProps) => {
           <div className="text-xs text-muted-foreground mt-2">
             {positions} positions = $$ × 6
           </div>
+          <div className="text-xs text-primary/60 mt-1">
+            Générations 1-4
+          </div>
         </div>
       ) : (
         // 2x3 Matrix (14 positions total: 2 + 4 + 8)
@@ -92,6 +95,9 @@ const MatrixDiagram = ({ type, label }: MatrixDiagramProps) => {
           
           <div className="text-xs text-muted-foreground mt-2">
             {positions} positions = $$ × 14
+          </div>
+          <div className="text-xs text-primary/60 mt-1">
+            Générations 5-7
           </div>
         </div>
       )}
