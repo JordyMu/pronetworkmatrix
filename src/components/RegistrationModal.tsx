@@ -172,14 +172,14 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
       // Determine the referrer
       const referredById = referrerProfile?.id || referralId || null;
 
-      // Create profile
-      const { error: profileError } = await supabase.from("profiles").insert({
-        user_id: authData.user.id,
-        full_name: `${formData.firstName} ${formData.lastName}`,
-        email: formData.email,
-        position: formData.position || null,
-        referred_by: referredById,
-        epin_used: formData.epin.toUpperCase(),
+      // Create profile using security definer function (bypasses RLS since user isn't logged in yet)
+      const { error: profileError } = await supabase.rpc("create_profile_on_signup", {
+        p_user_id: authData.user.id,
+        p_full_name: `${formData.firstName} ${formData.lastName}`,
+        p_email: formData.email,
+        p_position: formData.position || null,
+        p_referred_by: referredById,
+        p_epin_used: formData.epin.toUpperCase(),
       });
 
       if (profileError) {

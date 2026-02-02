@@ -120,6 +120,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      create_profile_on_signup: {
+        Args: {
+          p_email: string
+          p_epin_used?: string
+          p_full_name: string
+          p_position?: string
+          p_referred_by?: string
+          p_user_id: string
+        }
+        Returns: string
+      }
       generate_epin_code: { Args: never; Returns: string }
       generate_epins: {
         Args: { count?: number }
