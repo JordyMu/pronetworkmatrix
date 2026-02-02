@@ -34,12 +34,6 @@ const Navbar = ({ onLoginClick }: NavbarProps) => {
             <a href="#how-it-works" className="text-foreground/80 hover:text-primary transition-colors">
               Comment ça Marche
             </a>
-            <button 
-              onClick={openRegistration}
-              className="text-foreground/80 hover:text-primary transition-colors"
-            >
-              Rejoindre
-            </button>
           </div>
 
           {/* CTA Buttons */}
