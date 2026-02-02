@@ -1,5 +1,6 @@
 import { Crown, X, Key } from "lucide-react";
 import { useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Dialog, DialogContent } from "./ui/dialog";
@@ -9,9 +10,14 @@ import { toast } from "sonner";
 interface RegistrationModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onSwitchToLogin?: () => void;
 }
 
-const RegistrationModal = ({ open, onOpenChange }: RegistrationModalProps) => {
+const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: RegistrationModalProps) => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const referralId = searchParams.get("ref");
+
   const [formData, setFormData] = useState({
     epin: "",
     referralUsername: "",
@@ -26,6 +32,7 @@ const RegistrationModal = ({ open, onOpenChange }: RegistrationModalProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [epinValid, setEpinValid] = useState<boolean | null>(null);
   const [epinChecking, setEpinChecking] = useState(false);
+  const [referrerProfile, setReferrerProfile] = useState<{ id: string; full_name: string } | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -34,7 +41,6 @@ const RegistrationModal = ({ open, onOpenChange }: RegistrationModalProps) => {
       [name]: value,
     });
 
-    // Reset e-pin validation when user changes the e-pin
     if (name === "epin") {
       setEpinValid(null);
     }
@@ -90,6 +96,25 @@ const RegistrationModal = ({ open, onOpenChange }: RegistrationModalProps) => {
     }
   };
 
+  const findReferrer = async () => {
+    if (!formData.referralUsername) return;
+    
+    const { data } = await supabase
+      .from("profiles")
+      .select("id, full_name")
+      .ilike("full_name", `%${formData.referralUsername}%`)
+      .limit(1)
+      .single();
+    
+    if (data) {
+      setReferrerProfile(data);
+      toast.success(`Parrain trouvé: ${data.full_name}`);
+    } else {
+      setReferrerProfile(null);
+      toast.error("Parrain non trouvé");
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -100,6 +125,11 @@ const RegistrationModal = ({ open, onOpenChange }: RegistrationModalProps) => {
 
     if (formData.password !== formData.confirmPassword) {
       toast.error("Les mots de passe ne correspondent pas");
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      toast.error("Le mot de passe doit contenir au moins 6 caractères");
       return;
     }
 
@@ -117,10 +147,48 @@ const RegistrationModal = ({ open, onOpenChange }: RegistrationModalProps) => {
         return;
       }
 
-      // Here you would normally handle user registration
-      // For now, just show success
-      toast.success("Inscription réussie! Votre compte a été créé.");
-      console.log("Registration submitted:", formData);
+      // Create auth user
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            full_name: `${formData.firstName} ${formData.lastName}`,
+          },
+        },
+      });
+
+      if (authError) {
+        console.error("Auth error:", authError);
+        toast.error(authError.message);
+        return;
+      }
+
+      if (!authData.user) {
+        toast.error("Erreur lors de la création du compte");
+        return;
+      }
+
+      // Determine the referrer
+      const referredById = referrerProfile?.id || referralId || null;
+
+      // Create profile
+      const { error: profileError } = await supabase.from("profiles").insert({
+        user_id: authData.user.id,
+        full_name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        position: formData.position || null,
+        referred_by: referredById,
+        epin_used: formData.epin.toUpperCase(),
+      });
+
+      if (profileError) {
+        console.error("Profile error:", profileError);
+        toast.error("Erreur lors de la création du profil");
+        return;
+      }
+
+      toast.success("Inscription réussie! Veuillez vérifier votre email pour confirmer votre compte.");
       onOpenChange(false);
     } catch (error) {
       console.error("Registration error:", error);
@@ -357,7 +425,8 @@ const RegistrationModal = ({ open, onOpenChange }: RegistrationModalProps) => {
                     variant="outline"
                     className="flex-1 border-green-500 text-green-500 hover:bg-green-500/10"
                     onClick={() => {
-                      console.log("Navigate to login");
+                      onOpenChange(false);
+                      onSwitchToLogin?.();
                     }}
                   >
                     SE CONNECTER

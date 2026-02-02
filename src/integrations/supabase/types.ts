@@ -47,6 +47,53 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          epin_used: string | null
+          full_name: string
+          id: string
+          phone: string | null
+          position: string | null
+          referred_by: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          epin_used?: string | null
+          full_name: string
+          id?: string
+          phone?: string | null
+          position?: string | null
+          referred_by?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          epin_used?: string | null
+          full_name?: string
+          id?: string
+          phone?: string | null
+          position?: string | null
+          referred_by?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_referred_by_fkey"
+            columns: ["referred_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -57,6 +104,26 @@ export type Database = {
         Args: { count?: number }
         Returns: {
           code: string
+        }[]
+      }
+      get_network_stats: {
+        Args: { user_profile_id: string }
+        Returns: {
+          generation: number
+          member_count: number
+          reward_per_member: number
+          total_reward: number
+        }[]
+      }
+      get_user_network: {
+        Args: { user_profile_id: string }
+        Returns: {
+          email: string
+          full_name: string
+          generation: number
+          member_position: string
+          parent_id: string
+          profile_id: string
         }[]
       }
       validate_and_use_epin: { Args: { epin_code: string }; Returns: boolean }

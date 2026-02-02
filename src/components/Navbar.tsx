@@ -1,9 +1,13 @@
-import { Crown, Menu, X } from "lucide-react";
+import { Crown, Menu, X, LogIn } from "lucide-react";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { useRegistration } from "@/contexts/RegistrationContext";
 
-const Navbar = () => {
+interface NavbarProps {
+  onLoginClick?: () => void;
+}
+
+const Navbar = ({ onLoginClick }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const { openRegistration } = useRegistration();
 
@@ -38,8 +42,16 @@ const Navbar = () => {
             </button>
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* CTA Buttons */}
+          <div className="hidden md:flex items-center gap-3">
+            <Button 
+              variant="outline"
+              onClick={onLoginClick}
+              className="border-primary/50 hover:bg-primary/10"
+            >
+              <LogIn className="h-4 w-4 mr-2" />
+              Connexion
+            </Button>
             <Button 
               onClick={openRegistration}
               className="bg-gradient-gold text-primary-foreground font-semibold shadow-gold hover:opacity-90 transition-opacity"
@@ -91,6 +103,17 @@ const Navbar = () => {
               >
                 Rejoindre
               </button>
+              <Button 
+                variant="outline"
+                onClick={() => {
+                  setIsOpen(false);
+                  onLoginClick?.();
+                }}
+                className="border-primary/50 w-full"
+              >
+                <LogIn className="h-4 w-4 mr-2" />
+                Connexion
+              </Button>
               <Button 
                 onClick={() => {
                   setIsOpen(false);
