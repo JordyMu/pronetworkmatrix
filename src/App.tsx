@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import AdminRequests from "./pages/AdminRequests";
 import NotFound from "./pages/NotFound";
+import Compensation from "./pages/Compensation";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/compensation" element={<Compensation />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/admin/requests" element={<AdminRequests />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
