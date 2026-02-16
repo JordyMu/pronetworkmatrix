@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import CompensationPlan from "@/components/CompensationPlan";
+
 import HowItWorks from "@/components/HowItWorks";
 import JoinCTA from "@/components/JoinCTA";
 import Footer from "@/components/Footer";
@@ -40,7 +40,7 @@ const IndexContent = () => {
     <div className="min-h-screen bg-background">
       <Navbar onLoginClick={() => setLoginOpen(true)} />
       <Hero />
-      <CompensationPlan />
+      
       <HowItWorks />
       <JoinCTA />
       <Footer />
