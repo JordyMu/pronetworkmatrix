@@ -41,8 +41,8 @@ const IndexContent = () => {
       <Navbar onLoginClick={() => setLoginOpen(true)} />
       <Hero />
       
-      <HowItWorks />
       <JoinCTA />
+      <HowItWorks />
       <Footer />
       <RegistrationModal 
         open={isOpen} 
