@@ -1,4 +1,5 @@
 import { ArrowRight, Crown, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useRegistration } from "@/contexts/RegistrationContext";
 
@@ -55,13 +56,15 @@ const Hero = () => {
               Rejoindre Maintenant
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-primary/50 text-primary hover:bg-primary/10 text-lg px-8 py-6"
-            >
-              Voir le Plan de Compensation
-            </Button>
+            <Link to="/compensation">
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-primary/50 text-primary hover:bg-primary/10 text-lg px-8 py-6"
+              >
+                Voir le Plan de Compensation
+              </Button>
+            </Link>
           </div>
 
           {/* Stats */}
