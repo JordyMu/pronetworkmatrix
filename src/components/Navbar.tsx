@@ -1,4 +1,5 @@
 import { Crown, Menu, X, LogIn } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { useRegistration } from "@/contexts/RegistrationContext";
@@ -28,9 +29,9 @@ const Navbar = ({ onLoginClick }: NavbarProps) => {
             <a href="#home" className="text-foreground/80 hover:text-primary transition-colors">
               Accueil
             </a>
-            <a href="#compensation" className="text-foreground/80 hover:text-primary transition-colors">
+            <Link to="/compensation" className="text-foreground/80 hover:text-primary transition-colors">
               Plan de Compensation
-            </a>
+            </Link>
             <a href="#how-it-works" className="text-foreground/80 hover:text-primary transition-colors">
               Comment ça Marche
             </a>
@@ -74,13 +75,13 @@ const Navbar = ({ onLoginClick }: NavbarProps) => {
               >
                 Accueil
               </a>
-              <a
-                href="#compensation"
+              <Link
+                to="/compensation"
                 className="text-foreground/80 hover:text-primary transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 Plan de Compensation
-              </a>
+              </Link>
               <a
                 href="#how-it-works"
                 className="text-foreground/80 hover:text-primary transition-colors"
