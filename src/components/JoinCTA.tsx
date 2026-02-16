@@ -1,9 +1,12 @@
-import { ArrowRight, MessageCircle, Phone, Sparkles } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, MessageCircle, Phone, Sparkles, UserPlus } from "lucide-react";
 import { Button } from "./ui/button";
 import { useRegistration } from "@/contexts/RegistrationContext";
+import JoinRequestForm from "./JoinRequestForm";
 
 const JoinCTA = () => {
   const { openRegistration } = useRegistration();
+  const [joinFormOpen, setJoinFormOpen] = useState(false);
 
   return (
     <section id="join" className="py-24 relative overflow-hidden">
@@ -60,6 +63,15 @@ const JoinCTA = () => {
               Rejoindre ProNetwork
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={() => setJoinFormOpen(true)}
+              className="border-primary/50 text-primary font-semibold text-lg px-10 py-7 hover:bg-primary/10 transition-all hover:scale-105"
+            >
+              <UserPlus className="mr-2 h-5 w-5" />
+              Demander un E-Pin
+            </Button>
           </div>
 
           {/* Contact Options */}
@@ -76,6 +88,8 @@ const JoinCTA = () => {
           </div>
         </div>
       </div>
+
+      <JoinRequestForm open={joinFormOpen} onOpenChange={setJoinFormOpen} />
     </section>
   );
 };
