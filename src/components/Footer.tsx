@@ -1,4 +1,5 @@
 import { Crown } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -15,16 +16,16 @@ const Footer = () => {
 
           {/* Links */}
           <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
-            <a href="#home" className="hover:text-primary transition-colors">
+            <a href="/#home" className="hover:text-primary transition-colors">
               Accueil
             </a>
-            <a href="#compensation" className="hover:text-primary transition-colors">
+            <Link to="/compensation" className="hover:text-primary transition-colors">
               Plan de Compensation
-            </a>
-            <a href="#how-it-works" className="hover:text-primary transition-colors">
+            </Link>
+            <a href="/#how-it-works" className="hover:text-primary transition-colors">
               Comment ça Marche
             </a>
-            <a href="#join" className="hover:text-primary transition-colors">
+            <a href="/#join" className="hover:text-primary transition-colors">
               Rejoindre
             </a>
           </div>
