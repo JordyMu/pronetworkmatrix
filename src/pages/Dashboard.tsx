@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Crown, LogOut, User, Copy } from "lucide-react";
+import { Crown, LogOut, User, Copy, ClipboardList } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
@@ -8,13 +8,24 @@ import { useNetworkStats } from "@/hooks/useNetworkStats";
 import NetworkTree from "@/components/dashboard/NetworkTree";
 import GenerationStats from "@/components/dashboard/GenerationStats";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const { user, profile, loading, signOut, isAuthenticated } = useAuth();
+  const [isAdmin, setIsAdmin] = useState(false);
   const { network, stats, totalMembers, totalRewards, isLoading } = useNetworkStats(
     profile?.id
   );
+
+  useEffect(() => {
+    const checkAdmin = async () => {
+      if (!user) return;
+      const { data } = await supabase.rpc("has_role", { _user_id: user.id, _role: "admin" });
+      setIsAdmin(!!data);
+    };
+    if (user) checkAdmin();
+  }, [user]);
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
@@ -64,6 +75,17 @@ const Dashboard = () => {
             <span className="text-sm text-muted-foreground hidden md:block">
               {user?.email}
             </span>
+            {isAdmin && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => navigate("/admin/requests")}
+                className="border-primary/50 text-primary hover:bg-primary/10"
+              >
+                <ClipboardList className="h-4 w-4 mr-2" />
+                Demandes
+              </Button>
+            )}
             <Button
               variant="outline"
               size="sm"
