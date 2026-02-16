@@ -26,13 +26,13 @@ const Navbar = ({ onLoginClick }: NavbarProps) => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            <a href="#home" className="text-foreground/80 hover:text-primary transition-colors">
+            <a href="/#home" className="text-foreground/80 hover:text-primary transition-colors">
               Accueil
             </a>
             <Link to="/compensation" className="text-foreground/80 hover:text-primary transition-colors">
               Plan de Compensation
             </Link>
-            <a href="#how-it-works" className="text-foreground/80 hover:text-primary transition-colors">
+            <a href="/#how-it-works" className="text-foreground/80 hover:text-primary transition-colors">
               Comment ça Marche
             </a>
           </div>
@@ -69,7 +69,7 @@ const Navbar = ({ onLoginClick }: NavbarProps) => {
           <div className="md:hidden py-4 border-t border-border animate-fade-in">
             <div className="flex flex-col gap-4">
               <a
-                href="#home"
+                href="/#home"
                 className="text-foreground/80 hover:text-primary transition-colors"
                 onClick={() => setIsOpen(false)}
               >
@@ -83,7 +83,7 @@ const Navbar = ({ onLoginClick }: NavbarProps) => {
                 Plan de Compensation
               </Link>
               <a
-                href="#how-it-works"
+                href="/#how-it-works"
                 className="text-foreground/80 hover:text-primary transition-colors"
                 onClick={() => setIsOpen(false)}
               >
