@@ -1,1 +1,4 @@
 project_id = "hosyeawgjdykdcibdbfa"
+
+[functions.send-epin]
+verify_jwt = false
