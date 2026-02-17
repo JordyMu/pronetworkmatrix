@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Crown, LogOut, ArrowLeft, Check, X, Clock, Mail, Phone, User, MessageSquare, Loader2, Eye, Send } from "lucide-react";
+import { Crown, LogOut, ArrowLeft, Check, X, Clock, Mail, Phone, User, MessageSquare, Loader2, Eye, Copy, CheckCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -35,8 +35,8 @@ const AdminRequests = () => {
   const [previewRequestId, setPreviewRequestId] = useState<string | null>(null);
   const [previewRequestName, setPreviewRequestName] = useState<string>("");
   const [previewRequestEmail, setPreviewRequestEmail] = useState<string>("");
-  const [isSending, setIsSending] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
@@ -110,38 +110,33 @@ const AdminRequests = () => {
     }
   };
 
-  const handleConfirmSend = async () => {
-    if (!previewRequestId || !previewEpin) return;
-    setIsSending(true);
-    try {
-      const { data: { session } } = await supabase.auth.getSession();
-      const res = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-epin`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session?.access_token}`,
-          },
-          body: JSON.stringify({ requestId: previewRequestId, action: "send", epinCode: previewEpin }),
-        }
-      );
-      const result = await res.json();
-      if (!result.success) throw new Error(result.error);
+  const handleCopyEpin = async () => {
+    if (!previewEpin) return;
+    await navigator.clipboard.writeText(previewEpin);
+    setCopied(true);
+    toast.success("E-PIN copié !");
+    setTimeout(() => setCopied(false), 2000);
+  };
 
-      setRequests((prev) =>
-        prev.map((r) => (r.id === previewRequestId ? { ...r, status: "approved" } : r))
-      );
-      toast.success("E-PIN envoyé par email !");
-      setPreviewOpen(false);
-      setPreviewEpin(null);
-      setPreviewRequestId(null);
-    } catch (error: any) {
-      console.error("Error sending e-pin:", error);
-      toast.error(error.message || "Erreur lors de l'envoi");
-    } finally {
-      setIsSending(false);
+  const handleApproveAfterCopy = async () => {
+    if (!previewRequestId) return;
+    const { error } = await supabase
+      .from("join_requests")
+      .update({ status: "approved", admin_notes: `E-PIN: ${previewEpin} (copié manuellement)` })
+      .eq("id", previewRequestId);
+
+    if (error) {
+      toast.error("Erreur lors de la mise à jour");
+      return;
     }
+
+    setRequests((prev) =>
+      prev.map((r) => (r.id === previewRequestId ? { ...r, status: "approved" } : r))
+    );
+    toast.success("Demande approuvée !");
+    setPreviewOpen(false);
+    setPreviewEpin(null);
+    setPreviewRequestId(null);
   };
 
   const updateStatus = async (id: string, status: string) => {
@@ -332,19 +327,22 @@ const AdminRequests = () => {
               </span>
             </div>
             <p className="text-xs text-muted-foreground text-center">
-              Cliquez sur "Envoyer" pour envoyer cet E-PIN par email au demandeur.
+              Copiez ce code et transmettez-le manuellement au demandeur.
             </p>
           </div>
           <DialogFooter className="flex gap-2 sm:gap-2">
-            <Button variant="outline" onClick={() => setPreviewOpen(false)} disabled={isSending}>
-              Annuler
+            <Button variant="outline" onClick={() => setPreviewOpen(false)}>
+              Fermer
             </Button>
-            <Button onClick={handleConfirmSend} disabled={isSending} className="bg-green-600 hover:bg-green-700 text-white">
-              {isSending ? (
-                <><Loader2 className="h-4 w-4 mr-1 animate-spin" />Envoi...</>
+            <Button onClick={handleCopyEpin} variant="outline">
+              {copied ? (
+                <><CheckCheck className="h-4 w-4 mr-1" />Copié !</>
               ) : (
-                <><Send className="h-4 w-4 mr-1" />Envoyer par Email</>
+                <><Copy className="h-4 w-4 mr-1" />Copier E-PIN</>
               )}
+            </Button>
+            <Button onClick={handleApproveAfterCopy} className="bg-green-600 hover:bg-green-700 text-white">
+              <Check className="h-4 w-4 mr-1" />Marquer comme approuvée
             </Button>
           </DialogFooter>
         </DialogContent>
