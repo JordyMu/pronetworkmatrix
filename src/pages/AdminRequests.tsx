@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Crown, LogOut, ArrowLeft, Check, X, Clock, Mail, Phone, User, MessageSquare } from "lucide-react";
+import { Crown, LogOut, ArrowLeft, Check, X, Clock, Mail, Phone, User, MessageSquare, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -26,6 +26,7 @@ const AdminRequests = () => {
   const [requests, setRequests] = useState<JoinRequest[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [processingId, setProcessingId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
@@ -69,6 +70,38 @@ const AdminRequests = () => {
   }, [isAdmin]);
 
   const updateStatus = async (id: string, status: string) => {
+    if (status === "approved") {
+      // Use edge function to generate e-pin and send email
+      setProcessingId(id);
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        const res = await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-epin`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${session?.access_token}`,
+            },
+            body: JSON.stringify({ requestId: id }),
+          }
+        );
+        const result = await res.json();
+        if (!result.success) throw new Error(result.error);
+
+        setRequests((prev) =>
+          prev.map((r) => (r.id === id ? { ...r, status: "approved" } : r))
+        );
+        toast.success("E-PIN généré et envoyé par email !");
+      } catch (error: any) {
+        console.error("Error approving:", error);
+        toast.error(error.message || "Erreur lors de l'approbation");
+      } finally {
+        setProcessingId(null);
+      }
+      return;
+    }
+
     const { error } = await supabase
       .from("join_requests")
       .update({ status })
@@ -82,7 +115,7 @@ const AdminRequests = () => {
     setRequests((prev) =>
       prev.map((r) => (r.id === id ? { ...r, status } : r))
     );
-    toast.success(`Demande ${status === "approved" ? "approuvée" : "rejetée"}`);
+    toast.success("Demande rejetée");
   };
 
   const handleSignOut = async () => {
@@ -204,11 +237,14 @@ const AdminRequests = () => {
 
                   {req.status === "pending" && (
                     <div className="flex gap-2">
-                      <Button size="sm" onClick={() => updateStatus(req.id, "approved")} className="bg-green-600 hover:bg-green-700 text-white">
-                        <Check className="h-4 w-4 mr-1" />
-                        Approuver
+                      <Button size="sm" onClick={() => updateStatus(req.id, "approved")} disabled={processingId === req.id} className="bg-green-600 hover:bg-green-700 text-white">
+                        {processingId === req.id ? (
+                          <><Loader2 className="h-4 w-4 mr-1 animate-spin" />Envoi...</>
+                        ) : (
+                          <><Check className="h-4 w-4 mr-1" />Approuver & Envoyer E-PIN</>
+                        )}
                       </Button>
-                      <Button size="sm" variant="outline" onClick={() => updateStatus(req.id, "rejected")} className="border-destructive/50 text-destructive hover:bg-destructive/10">
+                      <Button size="sm" variant="outline" onClick={() => updateStatus(req.id, "rejected")} disabled={!!processingId} className="border-destructive/50 text-destructive hover:bg-destructive/10">
                         <X className="h-4 w-4 mr-1" />
                         Rejeter
                       </Button>
