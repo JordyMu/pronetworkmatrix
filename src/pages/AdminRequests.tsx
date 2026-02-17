@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Crown, LogOut, ArrowLeft, Check, X, Clock, Mail, Phone, User, MessageSquare, Loader2 } from "lucide-react";
+import { Crown, LogOut, ArrowLeft, Check, X, Clock, Mail, Phone, User, MessageSquare, Loader2, Eye, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -27,6 +28,15 @@ const AdminRequests = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [processingId, setProcessingId] = useState<string | null>(null);
+
+  // E-PIN preview dialog state
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewEpin, setPreviewEpin] = useState<string | null>(null);
+  const [previewRequestId, setPreviewRequestId] = useState<string | null>(null);
+  const [previewRequestName, setPreviewRequestName] = useState<string>("");
+  const [previewRequestEmail, setPreviewRequestEmail] = useState<string>("");
+  const [isSending, setIsSending] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
@@ -69,39 +79,72 @@ const AdminRequests = () => {
     fetchRequests();
   }, [isAdmin]);
 
-  const updateStatus = async (id: string, status: string) => {
-    if (status === "approved") {
-      // Use edge function to generate e-pin and send email
-      setProcessingId(id);
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        const res = await fetch(
-          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-epin`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${session?.access_token}`,
-            },
-            body: JSON.stringify({ requestId: id }),
-          }
-        );
-        const result = await res.json();
-        if (!result.success) throw new Error(result.error);
+  const handleGeneratePreview = async (req: JoinRequest) => {
+    setIsGenerating(true);
+    setPreviewRequestId(req.id);
+    setPreviewRequestName(req.full_name);
+    setPreviewRequestEmail(req.email);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      const res = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-epin`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.access_token}`,
+          },
+          body: JSON.stringify({ requestId: req.id, action: "generate" }),
+        }
+      );
+      const result = await res.json();
+      if (!result.success) throw new Error(result.error);
 
-        setRequests((prev) =>
-          prev.map((r) => (r.id === id ? { ...r, status: "approved" } : r))
-        );
-        toast.success("E-PIN généré et envoyé par email !");
-      } catch (error: any) {
-        console.error("Error approving:", error);
-        toast.error(error.message || "Erreur lors de l'approbation");
-      } finally {
-        setProcessingId(null);
-      }
-      return;
+      setPreviewEpin(result.epinCode);
+      setPreviewOpen(true);
+    } catch (error: any) {
+      console.error("Error generating e-pin:", error);
+      toast.error(error.message || "Erreur lors de la génération de l'E-PIN");
+    } finally {
+      setIsGenerating(false);
     }
+  };
 
+  const handleConfirmSend = async () => {
+    if (!previewRequestId || !previewEpin) return;
+    setIsSending(true);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      const res = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-epin`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session?.access_token}`,
+          },
+          body: JSON.stringify({ requestId: previewRequestId, action: "send", epinCode: previewEpin }),
+        }
+      );
+      const result = await res.json();
+      if (!result.success) throw new Error(result.error);
+
+      setRequests((prev) =>
+        prev.map((r) => (r.id === previewRequestId ? { ...r, status: "approved" } : r))
+      );
+      toast.success("E-PIN envoyé par email !");
+      setPreviewOpen(false);
+      setPreviewEpin(null);
+      setPreviewRequestId(null);
+    } catch (error: any) {
+      console.error("Error sending e-pin:", error);
+      toast.error(error.message || "Erreur lors de l'envoi");
+    } finally {
+      setIsSending(false);
+    }
+  };
+
+  const updateStatus = async (id: string, status: string) => {
     const { error } = await supabase
       .from("join_requests")
       .update({ status })
@@ -237,14 +280,19 @@ const AdminRequests = () => {
 
                   {req.status === "pending" && (
                     <div className="flex gap-2">
-                      <Button size="sm" onClick={() => updateStatus(req.id, "approved")} disabled={processingId === req.id} className="bg-green-600 hover:bg-green-700 text-white">
-                        {processingId === req.id ? (
-                          <><Loader2 className="h-4 w-4 mr-1 animate-spin" />Envoi...</>
+                      <Button
+                        size="sm"
+                        onClick={() => handleGeneratePreview(req)}
+                        disabled={isGenerating && previewRequestId === req.id}
+                        className="bg-green-600 hover:bg-green-700 text-white"
+                      >
+                        {isGenerating && previewRequestId === req.id ? (
+                          <><Loader2 className="h-4 w-4 mr-1 animate-spin" />Génération...</>
                         ) : (
-                          <><Check className="h-4 w-4 mr-1" />Approuver & Envoyer E-PIN</>
+                          <><Eye className="h-4 w-4 mr-1" />Générer & Prévisualiser E-PIN</>
                         )}
                       </Button>
-                      <Button size="sm" variant="outline" onClick={() => updateStatus(req.id, "rejected")} disabled={!!processingId} className="border-destructive/50 text-destructive hover:bg-destructive/10">
+                      <Button size="sm" variant="outline" onClick={() => updateStatus(req.id, "rejected")} disabled={isGenerating} className="border-destructive/50 text-destructive hover:bg-destructive/10">
                         <X className="h-4 w-4 mr-1" />
                         Rejeter
                       </Button>
@@ -256,6 +304,51 @@ const AdminRequests = () => {
           </div>
         )}
       </main>
+
+      {/* E-PIN Preview Dialog */}
+      <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-center">Prévisualisation E-PIN</DialogTitle>
+            <DialogDescription className="text-center">
+              Vérifiez l'E-PIN avant de l'envoyer à <strong>{previewRequestName}</strong>
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="bg-muted/50 rounded-lg p-4 space-y-2">
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <User className="h-4 w-4" />
+                <span>{previewRequestName}</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Mail className="h-4 w-4" />
+                <span>{previewRequestEmail}</span>
+              </div>
+            </div>
+            <div className="bg-card border-2 border-primary/30 rounded-lg p-6 text-center">
+              <p className="text-xs text-muted-foreground mb-2">E-PIN généré</p>
+              <span className="text-3xl font-mono font-bold tracking-[6px] text-primary">
+                {previewEpin}
+              </span>
+            </div>
+            <p className="text-xs text-muted-foreground text-center">
+              Cliquez sur "Envoyer" pour envoyer cet E-PIN par email au demandeur.
+            </p>
+          </div>
+          <DialogFooter className="flex gap-2 sm:gap-2">
+            <Button variant="outline" onClick={() => setPreviewOpen(false)} disabled={isSending}>
+              Annuler
+            </Button>
+            <Button onClick={handleConfirmSend} disabled={isSending} className="bg-green-600 hover:bg-green-700 text-white">
+              {isSending ? (
+                <><Loader2 className="h-4 w-4 mr-1 animate-spin" />Envoi...</>
+              ) : (
+                <><Send className="h-4 w-4 mr-1" />Envoyer par Email</>
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

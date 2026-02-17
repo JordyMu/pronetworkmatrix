@@ -12,11 +12,6 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
-    if (!RESEND_API_KEY) {
-      throw new Error("RESEND_API_KEY is not configured");
-    }
-
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
@@ -35,7 +30,8 @@ Deno.serve(async (req) => {
     });
     if (!isAdmin) throw new Error("Admin access required");
 
-    const { requestId } = await req.json();
+    const body = await req.json();
+    const { requestId, action, epinCode } = body;
     if (!requestId) throw new Error("requestId is required");
 
     // Get the join request
@@ -46,15 +42,25 @@ Deno.serve(async (req) => {
       .single();
 
     if (reqError || !request) throw new Error("Request not found");
-    if (request.status !== "pending") throw new Error("Request already processed");
 
-    // Generate an e-pin
-    const { data: epinData, error: epinError } = await supabase.rpc("generate_epins", { count: 1 });
-    if (epinError || !epinData?.length) throw new Error("Failed to generate e-pin");
+    // ACTION: generate - just generate the e-pin and return it for preview
+    if (action === "generate") {
+      if (request.status !== "pending") throw new Error("Request already processed");
 
-    const epinCode = epinData[0].code;
+      const { data: epinData, error: epinError } = await supabase.rpc("generate_epins", { count: 1 });
+      if (epinError || !epinData?.length) throw new Error("Failed to generate e-pin");
 
-    // Send email via Resend
+      return new Response(
+        JSON.stringify({ success: true, epinCode: epinData[0].code }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // ACTION: send - send the e-pin via email
+    const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+    if (!RESEND_API_KEY) throw new Error("RESEND_API_KEY is not configured");
+    if (!epinCode) throw new Error("epinCode is required for send action");
+
     const emailRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -86,7 +92,6 @@ Deno.serve(async (req) => {
       throw new Error(`Failed to send email: ${emailError}`);
     }
 
-    // Update request status
     await supabase
       .from("join_requests")
       .update({ status: "approved", admin_notes: `E-PIN: ${epinCode} envoyé par email` })
