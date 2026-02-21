@@ -46,7 +46,7 @@ const JoinCTA = () => {
               Frais d'Adhésion
             </div>
             <div className="text-5xl font-serif font-bold text-gradient-gold">
-              5,000 CDF
+              10,000 CDF
             </div>
             <div className="text-xs text-muted-foreground mt-2">
               Paiement unique • Accès à vie
