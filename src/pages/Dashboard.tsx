@@ -1,31 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Crown, LogOut, User, Copy, ClipboardList } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
 import { useNetworkStats } from "@/hooks/useNetworkStats";
+import { useAdminStatus } from "@/hooks/useAdminStatus";
 import NetworkTree from "@/components/dashboard/NetworkTree";
 import GenerationStats from "@/components/dashboard/GenerationStats";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const { user, profile, loading, signOut, isAuthenticated } = useAuth();
-  const [isAdmin, setIsAdmin] = useState(false);
+  const { isAdmin } = useAdminStatus(user?.id);
   const { network, stats, totalMembers, totalRewards, isLoading } = useNetworkStats(
     profile?.id
   );
-
-  useEffect(() => {
-    const checkAdmin = async () => {
-      if (!user) return;
-      const { data } = await supabase.rpc("has_role", { _user_id: user.id, _role: "admin" });
-      setIsAdmin(!!data);
-    };
-    if (user) checkAdmin();
-  }, [user]);
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
