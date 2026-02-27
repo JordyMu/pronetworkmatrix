@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Crown, LogOut, ArrowLeft, Check, X, Clock, Mail, Phone, User, MessageSquare, Loader2, Eye, Copy, CheckCheck } from "lucide-react";
+import { Crown, LogOut, ArrowLeft, Check, X, Clock, Mail, Phone, User, MessageSquare, Loader2, Eye, Copy, CheckCheck, Users, UserCheck, UserX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -28,6 +28,7 @@ const AdminRequests = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [processingId, setProcessingId] = useState<string | null>(null);
+  const [totalMembers, setTotalMembers] = useState(0);
 
   // E-PIN preview dialog state
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -62,7 +63,8 @@ const AdminRequests = () => {
 
   useEffect(() => {
     if (!isAdmin) return;
-    const fetchRequests = async () => {
+    const fetchData = async () => {
+      // Fetch requests
       const { data, error } = await supabase
         .from("join_requests")
         .select("*")
@@ -74,9 +76,19 @@ const AdminRequests = () => {
       } else {
         setRequests(data || []);
       }
+
+      // Fetch total registered members count
+      const { count, error: countError } = await supabase
+        .from("profiles")
+        .select("*", { count: "exact", head: true });
+
+      if (!countError && count !== null) {
+        setTotalMembers(count);
+      }
+
       setIsLoading(false);
     };
-    fetchRequests();
+    fetchData();
   }, [isAdmin]);
 
   const handleGeneratePreview = async (req: JoinRequest) => {
