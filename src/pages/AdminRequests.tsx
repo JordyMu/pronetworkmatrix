@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { useAuth } from "@/hooks/useAuth";
+import { useAdminStatus } from "@/hooks/useAdminStatus";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -23,11 +24,10 @@ interface JoinRequest {
 
 const AdminRequests = () => {
   const navigate = useNavigate();
-  const { user, profile, loading, signOut, isAuthenticated } = useAuth();
+  const { user, loading, signOut, isAuthenticated } = useAuth();
+  const { isAdmin, isCheckingAdmin } = useAdminStatus(user?.id);
   const [requests, setRequests] = useState<JoinRequest[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [processingId, setProcessingId] = useState<string | null>(null);
   const [totalMembers, setTotalMembers] = useState(0);
 
   // E-PIN preview dialog state
@@ -46,20 +46,11 @@ const AdminRequests = () => {
   }, [loading, isAuthenticated, navigate]);
 
   useEffect(() => {
-    const checkAdmin = async () => {
-      if (!user) return;
-      const { data } = await supabase.rpc("has_role", {
-        _user_id: user.id,
-        _role: "admin",
-      });
-      setIsAdmin(!!data);
-      if (!data) {
-        toast.error("Accès non autorisé");
-        navigate("/dashboard");
-      }
-    };
-    if (user) checkAdmin();
-  }, [user, navigate]);
+    if (!loading && !isCheckingAdmin && isAuthenticated && !isAdmin) {
+      toast.error("Accès non autorisé");
+      navigate("/dashboard");
+    }
+  }, [loading, isCheckingAdmin, isAuthenticated, isAdmin, navigate]);
 
   useEffect(() => {
     if (!isAdmin) return;
@@ -186,13 +177,15 @@ const AdminRequests = () => {
     }
   };
 
-  if (loading || !isAdmin) {
+  if (loading || isCheckingAdmin) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary" />
       </div>
     );
   }
+
+  if (!isAdmin) return null;
 
   const pendingCount = requests.filter((r) => r.status === "pending").length;
   const approvedCount = requests.filter((r) => r.status === "approved").length;
