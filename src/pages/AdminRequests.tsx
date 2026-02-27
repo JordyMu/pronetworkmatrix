@@ -195,6 +195,8 @@ const AdminRequests = () => {
   }
 
   const pendingCount = requests.filter((r) => r.status === "pending").length;
+  const approvedCount = requests.filter((r) => r.status === "approved").length;
+  const rejectedCount = requests.filter((r) => r.status === "rejected").length;
 
   return (
     <div className="min-h-screen bg-background">
@@ -227,6 +229,54 @@ const AdminRequests = () => {
           <p className="text-muted-foreground">
             {pendingCount} demande{pendingCount !== 1 ? "s" : ""} en attente
           </p>
+        </div>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <Card className="border-primary/20 bg-card/50 backdrop-blur">
+            <CardContent className="p-4 flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-primary/10">
+                <Users className="h-5 w-5 text-primary" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold">{totalMembers}</p>
+                <p className="text-xs text-muted-foreground">Membres inscrits</p>
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="border-primary/20 bg-card/50 backdrop-blur">
+            <CardContent className="p-4 flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-amber-500/10">
+                <Clock className="h-5 w-5 text-amber-500" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold">{pendingCount}</p>
+                <p className="text-xs text-muted-foreground">En attente</p>
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="border-primary/20 bg-card/50 backdrop-blur">
+            <CardContent className="p-4 flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-emerald-500/10">
+                <UserCheck className="h-5 w-5 text-emerald-500" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold">{approvedCount}</p>
+                <p className="text-xs text-muted-foreground">Approuvées</p>
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="border-primary/20 bg-card/50 backdrop-blur">
+            <CardContent className="p-4 flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-destructive/10">
+                <UserX className="h-5 w-5 text-destructive" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold">{rejectedCount}</p>
+                <p className="text-xs text-muted-foreground">Rejetées</p>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         {isLoading ? (
