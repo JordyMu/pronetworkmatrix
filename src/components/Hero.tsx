@@ -41,9 +41,10 @@ const Hero = () => {
           </h1>
 
           {/* Subheading */}
-          <p className="text-xl md:text-2xl text-foreground/70 mb-8 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: "0.2s" }}>
-            Rejoignez notre système de matrice révolutionnaire et débloquez un
-            potentiel de gains illimité. Commencez votre chemin vers la liberté financière dès aujourd'hui.
+          <p className="text-xl md:text-2xl text-foreground/70 mb-8 max-w-3xl mx-auto animate-fade-in" style={{ animationDelay: "0.2s" }}>
+            Une plateforme de revenu communautaire est un modèle économique et
+            numérique où les membres d'une communauté génèrent, partagent ou
+            redistribuent des revenus de manière collective.
           </p>
 
           {/* CTA Buttons */}
