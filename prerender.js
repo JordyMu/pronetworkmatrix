@@ -17,8 +17,10 @@ const routesToPrerender = fs
 
 ;(async () => {
   for (const url of routesToPrerender) {
-    const appHtml = render(url)
-    const html = template.replace('<!--app-html-->', appHtml)
+    const { html: appHtml, head } = render(url)
+    const html = template
+      .replace('<!--app-head-->', head ?? '')
+      .replace('<!--app-html-->', appHtml)
 
     const filePath = `dist${url === '/' ? '/index' : url}.html`
     fs.writeFileSync(toAbsolute(filePath), html)
