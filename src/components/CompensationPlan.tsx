@@ -159,7 +159,7 @@ const CompensationPlan = () => {
       perMember: "20,000.00 CDF",
       calculation: "20,000.00 CDF × 14",
       totalEarnings: "280,000.00 CDF",
-      bonuses: ["Téléphone Androïde", "Voucher d'études scolaire (150,000 CDF)"],
+      bonuses: ["Décodeur", "Jeux des casseroles"],
     },
     {
       level: 6,
