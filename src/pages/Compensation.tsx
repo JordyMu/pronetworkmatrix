@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import Seo from "@/components/Seo";
 import CompensationPlan from "@/components/CompensationPlan";
 import Footer from "@/components/Footer";
 import { useState } from "react";
@@ -22,6 +23,20 @@ const CompensationContent = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Plan de Compensation ProNetwork — 7 Générations"
+        description="Détail du plan de compensation ProNetwork : matrices 2x2 et 2x3, gains par génération en CDF et bonus associés à chaque niveau."
+        path="/compensation"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: "Plan de Compensation ProNetwork",
+          about: "Système de matrice à 7 générations et bonus",
+          inLanguage: "fr",
+          publisher: { "@type": "Organization", name: "ProNetwork" },
+          mainEntityOfPage: "https://pronetworkmatrix.lovable.app/compensation",
+        }}
+      />
       <Navbar onLoginClick={() => setLoginOpen(true)} />
       <div className="pt-16">
         <CompensationPlan />

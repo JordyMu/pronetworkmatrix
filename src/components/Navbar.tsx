@@ -60,6 +60,7 @@ const Navbar = ({ onLoginClick }: NavbarProps) => {
 
           {/* Mobile Menu Button */}
           <button
+            aria-label="Menu"
             className="md:hidden text-foreground"
             onClick={() => setIsOpen(!isOpen)}
           >

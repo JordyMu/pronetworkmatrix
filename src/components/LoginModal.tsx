@@ -53,6 +53,7 @@ const LoginModal = ({ open, onOpenChange, onSwitchToRegister }: LoginModalProps)
       <DialogContent className="max-w-md p-0 overflow-hidden bg-background border-primary/30">
         <div className="p-8 relative">
           <button
+            aria-label="Fermer"
             onClick={() => onOpenChange(false)}
             className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
           >

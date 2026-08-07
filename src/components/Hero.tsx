@@ -36,8 +36,10 @@ const Hero = () => {
 
           {/* Main Heading */}
           <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-            Bienvenue sur{" "}
-            <span className="text-gradient-gold">ProNetwork</span>
+            <span className="text-gradient-gold">ProNetwork</span>{" "}
+            <span className="block text-3xl md:text-4xl mt-3 font-sans font-semibold text-foreground/80">
+              Plateforme de Revenu Communautaire
+            </span>
           </h1>
 
           {/* Subheading */}
