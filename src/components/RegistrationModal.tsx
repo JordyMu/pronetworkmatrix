@@ -233,6 +233,7 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
           <div className="p-8 relative max-h-[90vh] overflow-y-auto">
             {/* Close Button */}
             <button
+              aria-label="Fermer"
               onClick={() => onOpenChange(false)}
               className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
             >

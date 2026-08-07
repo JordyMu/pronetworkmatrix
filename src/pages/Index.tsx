@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
+import Seo from "@/components/Seo";
 import Hero from "@/components/Hero";
 
 import HowItWorks from "@/components/HowItWorks";
@@ -38,6 +39,28 @@ const IndexContent = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="ProNetwork — Plateforme de Revenu Communautaire"
+        description="ProNetwork : plateforme de revenu communautaire à 7 générations. Rejoignez le réseau, développez votre matrice et vos revenus en CDF."
+        path="/"
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "ProNetwork",
+            url: "https://pronetworkmatrix.lovable.app/",
+            description:
+              "Plateforme de revenu communautaire basée sur un système de matrice à 7 générations.",
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "ProNetwork",
+            url: "https://pronetworkmatrix.lovable.app/",
+            inLanguage: "fr",
+          },
+        ]}
+      />
       <Navbar onLoginClick={() => setLoginOpen(true)} />
       <Hero />
       
