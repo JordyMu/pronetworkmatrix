@@ -10,7 +10,9 @@
     "build:client": "vite build",
     "build:server": "vite build --ssr src/entry-server.tsx --outDir dist/server",
     "build:prerender": "node prerender.js",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predev": "bunx tsx scripts/generate-sitemap.ts",
+    "prebuild": "bunx tsx scripts/generate-sitemap.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
