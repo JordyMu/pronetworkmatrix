@@ -194,9 +194,10 @@ const CompensationPlan = () => {
             <TrendingUp className="h-4 w-4 text-primary" />
             <span className="text-sm text-primary font-medium">Système à 7 Générations</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4">
-            Plan de <span className="text-gradient-gold">Compensation</span>
-          </h2>
+          <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">
+            Plan de <span className="text-gradient-gold">Compensation</span> ProNetwork
+          </h1>
+
           <p className="text-lg text-muted-foreground">
             Notre système de matrice unique vous récompense à chaque génération. Commencez à
             construire votre réseau et regardez vos gains croître de façon exponentielle.
