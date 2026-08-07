@@ -169,7 +169,7 @@ const CompensationPlan = () => {
       perMember: "40,000.00 CDF",
       calculation: "40,000.00 CDF × 14",
       totalEarnings: "560,000.00 CDF",
-      bonuses: ["Batterie", "Panneau solaire, compteur et stabilisateur"],
+      bonuses: ["Kit solaire"],
     },
     {
       level: 7,
