@@ -35,6 +35,9 @@ const Navbar = ({ onLoginClick }: NavbarProps) => {
             <a href="/#how-it-works" className="text-foreground/80 hover:text-primary transition-colors">
               Comment ça Marche
             </a>
+            <Link to="/about" className="text-foreground/80 hover:text-primary transition-colors">
+              À propos
+            </Link>
           </div>
 
           {/* CTA Buttons */}
@@ -89,6 +92,13 @@ const Navbar = ({ onLoginClick }: NavbarProps) => {
               >
                 Comment ça Marche
               </a>
+              <Link
+                to="/about"
+                className="text-foreground/80 hover:text-primary transition-colors"
+                onClick={() => setIsOpen(false)}
+              >
+                À propos
+              </Link>
               <button
                 onClick={() => {
                   setIsOpen(false);
