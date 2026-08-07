@@ -179,7 +179,7 @@ const CompensationPlan = () => {
       perMember: "80,000.00 CDF",
       calculation: "80,000.00 CDF × 14",
       totalEarnings: "1,120,000.00 CDF",
-      bonuses: ["Congélateur", "Voucher frais de minerval (250,000 CDF)"],
+      bonuses: ["Congélateur", "Frais scolaires/Minerval : 250.000 CDF"],
     },
   ];
 
