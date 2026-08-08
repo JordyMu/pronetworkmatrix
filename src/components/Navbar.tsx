@@ -1,8 +1,10 @@
-import { Crown, Menu, X, LogIn } from "lucide-react";
+import { Crown, Menu, X, LogIn, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { useRegistration } from "@/contexts/RegistrationContext";
+import { useAuth } from "@/hooks/useAuth";
+import { useAdminStatus } from "@/hooks/useAdminStatus";
 
 interface NavbarProps {
   onLoginClick?: () => void;
@@ -11,6 +13,9 @@ interface NavbarProps {
 const Navbar = ({ onLoginClick }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const { openRegistration } = useRegistration();
+  const { user } = useAuth();
+  const { isAdmin } = useAdminStatus(user?.id);
+
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
