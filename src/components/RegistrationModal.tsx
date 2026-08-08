@@ -248,12 +248,12 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* E-PIN Field - REQUIRED FIRST */}
               <div className="p-4 rounded-lg border-2 border-primary/50 bg-primary/5">
-                <label className="block text-xs font-semibold text-primary mb-1.5 tracking-wide">
+                <label htmlFor="reg-epin" className="block text-xs font-semibold text-primary mb-1.5 tracking-wide">
                   CODE E-PIN <span className="text-destructive">*</span>
                 </label>
                 <div className="flex gap-2">
                   <Input
-                    name="epin"
+                    id="reg-epin" name="epin"
                     placeholder="Entrer votre code e-pin"
                     value={formData.epin}
                     onChange={handleChange}
@@ -286,11 +286,11 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
                 {/* Row 1: Referral & Position */}
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div>
-                    <label className="block text-xs font-semibold text-muted-foreground mb-1.5 tracking-wide">
+                    <label htmlFor="reg-referralUsername" className="block text-xs font-semibold text-muted-foreground mb-1.5 tracking-wide">
                       NOM D'UTILISATEUR PARRAIN <span className="text-destructive">*</span>
                     </label>
                     <Input
-                      name="referralUsername"
+                      id="reg-referralUsername" name="referralUsername"
                       placeholder="Entrer le nom du parrain"
                       value={formData.referralUsername}
                       onChange={handleChange}
@@ -299,11 +299,11 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-muted-foreground mb-1.5 tracking-wide">
+                    <label htmlFor="reg-position" className="block text-xs font-semibold text-muted-foreground mb-1.5 tracking-wide">
                       POSITION <span className="text-destructive">*</span>
                     </label>
                     <select
-                      name="position"
+                      id="reg-position" name="position"
                       value={formData.position}
                       onChange={handleChange}
                       className="flex h-10 w-full rounded-md border border-border/50 bg-background/50 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
@@ -319,11 +319,11 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
                 {/* Row 2: First & Last Name */}
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div>
-                    <label className="block text-xs font-semibold text-muted-foreground mb-1.5 tracking-wide">
+                    <label htmlFor="reg-firstName" className="block text-xs font-semibold text-muted-foreground mb-1.5 tracking-wide">
                       PRÉNOM <span className="text-destructive">*</span>
                     </label>
                     <Input
-                      name="firstName"
+                      id="reg-firstName" name="firstName"
                       placeholder="Entrer votre prénom"
                       value={formData.firstName}
                       onChange={handleChange}
@@ -332,11 +332,11 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-muted-foreground mb-1.5 tracking-wide">
+                    <label htmlFor="reg-lastName" className="block text-xs font-semibold text-muted-foreground mb-1.5 tracking-wide">
                       NOM <span className="text-destructive">*</span>
                     </label>
                     <Input
-                      name="lastName"
+                      id="reg-lastName" name="lastName"
                       placeholder="Entrer votre nom"
                       value={formData.lastName}
                       onChange={handleChange}
@@ -348,11 +348,11 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
 
                 {/* Row 3: Username */}
                 <div className="mb-4">
-                  <label className="block text-xs font-semibold text-muted-foreground mb-1.5 tracking-wide">
+                  <label htmlFor="reg-username" className="block text-xs font-semibold text-muted-foreground mb-1.5 tracking-wide">
                     NOM D'UTILISATEUR <span className="text-destructive">*</span>
                   </label>
                   <Input
-                    name="username"
+                    id="reg-username" name="username"
                     placeholder="Choisir un nom d'utilisateur"
                     value={formData.username}
                     onChange={handleChange}
@@ -363,11 +363,11 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
 
                 {/* Row 4: Email */}
                 <div className="mb-4">
-                  <label className="block text-xs font-semibold text-muted-foreground mb-1.5 tracking-wide">
+                  <label htmlFor="reg-email" className="block text-xs font-semibold text-muted-foreground mb-1.5 tracking-wide">
                     EMAIL <span className="text-destructive">*</span>
                   </label>
                   <Input
-                    name="email"
+                    id="reg-email" name="email"
                     type="email"
                     placeholder="Entrer votre email"
                     value={formData.email}
@@ -380,11 +380,11 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
                 {/* Row 5: Password & Confirm */}
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div>
-                    <label className="block text-xs font-semibold text-muted-foreground mb-1.5 tracking-wide">
+                    <label htmlFor="reg-password" className="block text-xs font-semibold text-muted-foreground mb-1.5 tracking-wide">
                       MOT DE PASSE <span className="text-destructive">*</span>
                     </label>
                     <Input
-                      name="password"
+                      id="reg-password" name="password"
                       type="password"
                       placeholder="Mot de passe"
                       value={formData.password}
@@ -394,11 +394,11 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-muted-foreground mb-1.5 tracking-wide">
+                    <label htmlFor="reg-confirmPassword" className="block text-xs font-semibold text-muted-foreground mb-1.5 tracking-wide">
                       CONFIRMER <span className="text-destructive">*</span>
                     </label>
                     <Input
-                      name="confirmPassword"
+                      id="reg-confirmPassword" name="confirmPassword"
                       type="password"
                       placeholder="Confirmer le mot de passe"
                       value={formData.confirmPassword}

@@ -205,6 +205,9 @@ const CompensationPlan = () => {
         </div>
 
         {/* Matrix Diagrams */}
+        <h2 className="text-2xl md:text-3xl font-serif font-bold text-center mb-8">
+          Nos <span className="text-gradient-gold">Matrices</span>
+        </h2>
         <div className="flex flex-col md:flex-row justify-center gap-12 mb-16">
           <div className="p-8 rounded-2xl bg-gradient-card border border-border">
             <MatrixDiagram type="2x2" label="Générations 1-4 : Matrice 2×2" />
@@ -215,6 +218,9 @@ const CompensationPlan = () => {
         </div>
 
         {/* Generation Cards */}
+        <h2 className="text-2xl md:text-3xl font-serif font-bold text-center mb-8">
+          Gains par <span className="text-gradient-gold">Génération</span>
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {generations.map((gen) => (
             <GenerationCard key={gen.level} {...gen} />

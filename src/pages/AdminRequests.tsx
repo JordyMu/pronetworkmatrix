@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { useAuth } from "@/hooks/useAuth";
 import { useAdminStatus } from "@/hooks/useAdminStatus";
 import { supabase } from "@/integrations/supabase/client";
+import Seo from "@/components/Seo";
 import { toast } from "sonner";
 
 interface JoinRequest {
@@ -193,6 +194,12 @@ const AdminRequests = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Seo
+        title="Demandes d'Adhésion — Admin UNITICASH"
+        description="Interface administrateur UNITICASH pour consulter, approuver ou rejeter les demandes d'adhésion et distribuer les codes E-PIN aux nouveaux membres."
+        path="/admin/requests"
+        noindex
+      />
       <header className="border-b border-border/50 bg-background/80 backdrop-blur sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -229,6 +236,7 @@ const AdminRequests = () => {
         </div>
 
         {/* Stats Cards */}
+        <h2 className="text-xl font-serif font-semibold mb-4">Statistiques</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <Card className="border-primary/20 bg-card/50 backdrop-blur">
             <CardContent className="p-4 flex items-center gap-3">

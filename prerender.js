@@ -46,6 +46,13 @@ const routesToPrerender = fs
       base = base.replace(/\s*<meta property="og:description"[^>]*>/, '')
     if (head.includes('property="og:type"'))
       base = base.replace(/\s*<meta property="og:type"[^>]*>/, '')
+    if (head.includes('property="og:image"'))
+      base = base.replace(/\s*<meta property="og:image"[^>]*>/, '')
+    if (head.includes('name="twitter:card"'))
+      base = base.replace(/\s*<meta name="twitter:card"[^>]*>/, '')
+    if (head.includes('name="twitter:image"'))
+      base = base.replace(/\s*<meta name="twitter:image"[^>]*>/, '')
+
 
     const html = base
       .replace('<!--app-head-->', head ?? '')

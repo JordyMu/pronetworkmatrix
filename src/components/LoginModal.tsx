@@ -70,10 +70,11 @@ const LoginModal = ({ open, onOpenChange, onSwitchToRegister }: LoginModalProps)
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-muted-foreground mb-1.5 tracking-wide">
+              <label htmlFor="login-email" className="block text-xs font-semibold text-muted-foreground mb-1.5 tracking-wide">
                 EMAIL
               </label>
               <Input
+                id="login-email"
                 type="email"
                 placeholder="Entrer votre email"
                 value={email}
@@ -84,10 +85,11 @@ const LoginModal = ({ open, onOpenChange, onSwitchToRegister }: LoginModalProps)
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-muted-foreground mb-1.5 tracking-wide">
+              <label htmlFor="login-password" className="block text-xs font-semibold text-muted-foreground mb-1.5 tracking-wide">
                 MOT DE PASSE
               </label>
               <Input
+                id="login-password"
                 type="password"
                 placeholder="Entrer votre mot de passe"
                 value={password}
