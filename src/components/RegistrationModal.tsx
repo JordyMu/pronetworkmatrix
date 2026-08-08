@@ -55,8 +55,8 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
 
     setEpinChecking(true);
     try {
-      const { data, error } = await supabase.rpc("check_epin_validity", {
-        epin_code: formData.epin.toUpperCase(),
+      const { data, error } = await supabase.functions.invoke("epin-check", {
+        body: { code: formData.epin.toUpperCase() },
       });
 
       if (error) {
@@ -66,11 +66,12 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
         return;
       }
 
-      if (!data) {
+      if (!data?.valid) {
         toast.error("Code e-pin invalide, déjà utilisé ou expiré");
         setEpinValid(false);
         return;
       }
+
 
       toast.success("Code e-pin valide!");
       setEpinValid(true);
@@ -133,18 +134,6 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
 
     setIsLoading(true);
     try {
-      // Use e-pin and mark as used
-      const { data: validated, error: validateError } = await supabase.rpc(
-        "validate_and_use_epin",
-        { epin_code: formData.epin }
-      );
-
-      if (validateError || !validated) {
-        toast.error("Le code e-pin n'est plus valide");
-        setEpinValid(false);
-        return;
-      }
-
       // Create auth user
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: formData.email,
@@ -174,21 +163,27 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
       // Determine the referrer
       const referredById = referrerProfile?.id || referralId || null;
 
-      // Create profile using security definer function (bypasses RLS since user isn't logged in yet)
-      const { error: profileError } = await supabase.rpc("create_profile_on_signup", {
-        p_user_id: authData.user.id,
-        p_full_name: `${formData.firstName} ${formData.lastName}`,
-        p_email: formData.email,
-        p_position: formData.position || null,
-        p_referred_by: referredById,
-        p_epin_used: formData.epin.toUpperCase(),
-      });
+      // Consume the e-pin and create the profile server-side (service role)
+      const { data: regData, error: regError } = await supabase.functions.invoke(
+        "register-member",
+        {
+          body: {
+            userId: authData.user.id,
+            email: formData.email,
+            fullName: `${formData.firstName} ${formData.lastName}`,
+            position: formData.position || null,
+            referredBy: referredById,
+            epin: formData.epin.toUpperCase(),
+          },
+        }
+      );
 
-      if (profileError) {
-        logError("Profile error", profileError);
+      if (regError || !regData?.success) {
+        logError("Registration error", regError);
         toast.error("Erreur lors de la création du profil");
         return;
       }
+
 
       toast.success("Inscription réussie! Veuillez vérifier votre email pour confirmer votre compte.");
       onOpenChange(false);

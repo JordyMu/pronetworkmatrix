@@ -2,3 +2,9 @@ project_id = "hosyeawgjdykdcibdbfa"
 
 [functions.send-epin]
 verify_jwt = false
+
+[functions.epin-check]
+verify_jwt = false
+
+[functions.register-member]
+verify_jwt = false
