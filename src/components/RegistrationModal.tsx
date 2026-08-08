@@ -55,8 +55,8 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
 
     setEpinChecking(true);
     try {
-      const { data, error } = await supabase.rpc("check_epin_validity", {
-        epin_code: formData.epin.toUpperCase(),
+      const { data, error } = await supabase.functions.invoke("epin-check", {
+        body: { code: formData.epin.toUpperCase() },
       });
 
       if (error) {
@@ -66,11 +66,12 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
         return;
       }
 
-      if (!data) {
+      if (!data?.valid) {
         toast.error("Code e-pin invalide, déjà utilisé ou expiré");
         setEpinValid(false);
         return;
       }
+
 
       toast.success("Code e-pin valide!");
       setEpinValid(true);
