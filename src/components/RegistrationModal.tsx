@@ -157,8 +157,12 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
       });
 
       if (authError) {
-        console.error("Auth error:", authError);
-        toast.error(authError.message);
+        logError("Auth error", authError);
+        toast.error(
+          authError.message?.toLowerCase().includes("already registered")
+            ? "Un compte existe déjà avec cet email"
+            : "Impossible de créer le compte. Vérifiez vos informations."
+        );
         return;
       }
 
@@ -181,7 +185,7 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
       });
 
       if (profileError) {
-        console.error("Profile error:", profileError);
+        logError("Profile error", profileError);
         toast.error("Erreur lors de la création du profil");
         return;
       }
@@ -189,7 +193,7 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
       toast.success("Inscription réussie! Veuillez vérifier votre email pour confirmer votre compte.");
       onOpenChange(false);
     } catch (error) {
-      console.error("Registration error:", error);
+      logError("Registration error", error);
       toast.error("Erreur lors de l'inscription");
     } finally {
       setIsLoading(false);
