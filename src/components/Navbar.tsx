@@ -115,6 +115,17 @@ const Navbar = ({ onLoginClick }: NavbarProps) => {
               >
                 À propos
               </Link>
+              {isAdmin && (
+                <Link
+                  to="/admin/requests"
+                  className="flex items-center gap-1 text-primary font-semibold"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <Shield className="h-4 w-4" />
+                  Admin
+                </Link>
+              )}
+
               <button
                 onClick={() => {
                   setIsOpen(false);
