@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Crown, LogOut, ArrowLeft, Loader2, Users, Search, Mail, Phone, UserPlus, Calendar } from "lucide-react";
+import { Crown, LogOut, ArrowLeft, Loader2, Users, Search, Mail, Phone, UserPlus, Calendar, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useAuth } from "@/hooks/useAuth";
 import { useAdminStatus } from "@/hooks/useAdminStatus";
 import { supabase } from "@/integrations/supabase/client";
@@ -29,6 +30,8 @@ const AdminMembers = () => {
   const [members, setMembers] = useState<Profile[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [query, setQuery] = useState("");
+  const [levelFilter, setLevelFilter] = useState<"all" | "1-4" | "5-7">("all");
+  const [matrixFilter, setMatrixFilter] = useState<"all" | "2x2" | "2x3">("all");
 
   useEffect(() => {
     if (!loading && !isAuthenticated) navigate("/");
@@ -76,16 +79,46 @@ const AdminMembers = () => {
     return map;
   }, [members]);
 
+  const memberLevels = useMemo(() => {
+    const levels: Record<string, number> = {};
+    const roots = members.filter((m) => !m.referred_by);
+    const queue: { id: string; level: number }[] = roots.map((r) => ({ id: r.id, level: 1 }));
+    while (queue.length > 0) {
+      const { id, level } = queue.shift()!;
+      levels[id] = level;
+      const children = childrenOf[id] || [];
+      children.forEach((child) => queue.push({ id: child.id, level: level + 1 }));
+    }
+    return levels;
+  }, [members, childrenOf]);
+
   const filtered = useMemo(() => {
+    let result = members;
     const q = query.trim().toLowerCase();
-    if (!q) return members;
-    return members.filter(
-      (m) =>
-        m.full_name.toLowerCase().includes(q) ||
-        m.email.toLowerCase().includes(q) ||
-        (m.phone || "").toLowerCase().includes(q)
-    );
-  }, [members, query]);
+    if (q) {
+      result = result.filter(
+        (m) =>
+          m.full_name.toLowerCase().includes(q) ||
+          m.email.toLowerCase().includes(q) ||
+          (m.phone || "").toLowerCase().includes(q)
+      );
+    }
+    if (levelFilter !== "all") {
+      result = result.filter((m) => {
+        const level = memberLevels[m.id] || 1;
+        if (levelFilter === "1-4") return level >= 1 && level <= 4;
+        return level >= 5 && level <= 7;
+      });
+    }
+    if (matrixFilter !== "all") {
+      result = result.filter((m) => {
+        const level = memberLevels[m.id] || 1;
+        const matrix = level >= 1 && level <= 4 ? "2x2" : "2x3";
+        return matrix === matrixFilter;
+      });
+    }
+    return result;
+  }, [members, query, levelFilter, matrixFilter, memberLevels]);
 
   const handleSignOut = async () => {
     await signOut();
@@ -141,15 +174,39 @@ const AdminMembers = () => {
 
         <Card className="mb-6">
           <CardContent className="pt-6">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Rechercher par nom, email ou téléphone…"
-                className="pl-9"
-                aria-label="Rechercher un membre"
-              />
+            <div className="grid gap-4 md:grid-cols-3">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Rechercher par nom, email ou téléphone…"
+                  className="pl-9"
+                  aria-label="Rechercher un membre"
+                />
+              </div>
+              <Select value={levelFilter} onValueChange={(v) => setLevelFilter(v as typeof levelFilter)}>
+                <SelectTrigger aria-label="Filtrer par niveau">
+                  <Filter className="h-4 w-4 mr-2 text-muted-foreground" />
+                  <SelectValue placeholder="Niveau" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Tous les niveaux</SelectItem>
+                  <SelectItem value="1-4">Niveau 1-4 (2×2)</SelectItem>
+                  <SelectItem value="5-7">Niveau 5-7 (2×3)</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={matrixFilter} onValueChange={(v) => setMatrixFilter(v as typeof matrixFilter)}>
+                <SelectTrigger aria-label="Filtrer par matrice">
+                  <Filter className="h-4 w-4 mr-2 text-muted-foreground" />
+                  <SelectValue placeholder="Matrice" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Toutes les matrices</SelectItem>
+                  <SelectItem value="2x2">Matrice 2×2</SelectItem>
+                  <SelectItem value="2x3">Matrice 2×3</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </CardContent>
         </Card>
@@ -166,13 +223,17 @@ const AdminMembers = () => {
             {filtered.map((m) => {
               const sponsor = m.referred_by ? byId[m.referred_by] : null;
               const referrals = childrenOf[m.id] || [];
+              const level = memberLevels[m.id] || 1;
+              const matrixType = level >= 1 && level <= 4 ? "2×2" : "2×3";
               return (
                 <Card key={m.id}>
                   <CardHeader className="pb-3">
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <CardTitle className="text-lg">{m.full_name}</CardTitle>
-                      <div className="flex items-center gap-2">
-                        {m.position && <Badge variant="secondary">{m.position}</Badge>}
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <Badge variant="default" className="bg-primary/90">Niveau {level}</Badge>
+                        <Badge variant="secondary">Matrice {matrixType}</Badge>
+                        {m.position && <Badge variant="outline">{m.position}</Badge>}
                         <Badge variant="outline">
                           {referrals.length} filleul{referrals.length !== 1 ? "s" : ""}
                         </Badge>
