@@ -43,7 +43,17 @@ const Navbar = ({ onLoginClick }: NavbarProps) => {
             <Link to="/about" className="text-foreground/80 hover:text-primary transition-colors">
               À propos
             </Link>
+            {isAdmin && (
+              <Link
+                to="/admin/requests"
+                className="flex items-center gap-1 text-primary font-semibold hover:opacity-80 transition-opacity"
+              >
+                <Shield className="h-4 w-4" />
+                Admin
+              </Link>
+            )}
           </div>
+
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-3">
