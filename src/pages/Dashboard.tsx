@@ -67,16 +67,28 @@ const Dashboard = () => {
               {user?.email}
             </span>
             {isAdmin && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => navigate("/admin/requests")}
-                className="border-primary/50 text-primary hover:bg-primary/10"
-              >
-                <ClipboardList className="h-4 w-4 mr-2" />
-                Demandes
-              </Button>
+              <>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => navigate("/admin/requests")}
+                  className="border-primary/50 text-primary hover:bg-primary/10"
+                >
+                  <ClipboardList className="h-4 w-4 mr-2" />
+                  Demandes
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => navigate("/admin/members")}
+                  className="border-primary/50 text-primary hover:bg-primary/10"
+                >
+                  <Users className="h-4 w-4 mr-2" />
+                  Membres
+                </Button>
+              </>
             )}
+
             <Button
               variant="outline"
               size="sm"
