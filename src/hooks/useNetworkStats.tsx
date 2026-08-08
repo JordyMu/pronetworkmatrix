@@ -29,7 +29,7 @@ export const useNetworkStats = (profileId: string | undefined) => {
       });
 
       if (error) {
-        console.error("Error fetching network:", error);
+        logError("Error fetching network", error);
         throw error;
       }
 
@@ -48,7 +48,7 @@ export const useNetworkStats = (profileId: string | undefined) => {
       });
 
       if (error) {
-        console.error("Error fetching stats:", error);
+        logError("Error fetching stats", error);
         throw error;
       }
 
