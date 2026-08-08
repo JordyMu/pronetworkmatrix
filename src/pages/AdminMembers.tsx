@@ -79,16 +79,46 @@ const AdminMembers = () => {
     return map;
   }, [members]);
 
+  const memberLevels = useMemo(() => {
+    const levels: Record<string, number> = {};
+    const roots = members.filter((m) => !m.referred_by);
+    const queue: { id: string; level: number }[] = roots.map((r) => ({ id: r.id, level: 1 }));
+    while (queue.length > 0) {
+      const { id, level } = queue.shift()!;
+      levels[id] = level;
+      const children = childrenOf[id] || [];
+      children.forEach((child) => queue.push({ id: child.id, level: level + 1 }));
+    }
+    return levels;
+  }, [members, childrenOf]);
+
   const filtered = useMemo(() => {
+    let result = members;
     const q = query.trim().toLowerCase();
-    if (!q) return members;
-    return members.filter(
-      (m) =>
-        m.full_name.toLowerCase().includes(q) ||
-        m.email.toLowerCase().includes(q) ||
-        (m.phone || "").toLowerCase().includes(q)
-    );
-  }, [members, query]);
+    if (q) {
+      result = result.filter(
+        (m) =>
+          m.full_name.toLowerCase().includes(q) ||
+          m.email.toLowerCase().includes(q) ||
+          (m.phone || "").toLowerCase().includes(q)
+      );
+    }
+    if (levelFilter !== "all") {
+      result = result.filter((m) => {
+        const level = memberLevels[m.id] || 1;
+        if (levelFilter === "1-4") return level >= 1 && level <= 4;
+        return level >= 5 && level <= 7;
+      });
+    }
+    if (matrixFilter !== "all") {
+      result = result.filter((m) => {
+        const level = memberLevels[m.id] || 1;
+        const matrix = level >= 1 && level <= 4 ? "2x2" : "2x3";
+        return matrix === matrixFilter;
+      });
+    }
+    return result;
+  }, [members, query, levelFilter, matrixFilter, memberLevels]);
 
   const handleSignOut = async () => {
     await signOut();
