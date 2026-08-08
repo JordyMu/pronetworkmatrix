@@ -33,11 +33,11 @@ export const useAuth = () => {
           .single();
 
         if (error && error.code !== "PGRST116") {
-          console.error("Error fetching profile:", error);
+          logError("Error fetching profile", error);
         }
         if (isMounted) setProfile(data);
       } catch (error) {
-        console.error("Error:", error);
+        logError("Error fetching profile", error);
       }
     };
 
