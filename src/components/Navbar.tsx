@@ -1,8 +1,10 @@
-import { Crown, Menu, X, LogIn } from "lucide-react";
+import { Crown, Menu, X, LogIn, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { useRegistration } from "@/contexts/RegistrationContext";
+import { useAuth } from "@/hooks/useAuth";
+import { useAdminStatus } from "@/hooks/useAdminStatus";
 
 interface NavbarProps {
   onLoginClick?: () => void;
@@ -11,6 +13,9 @@ interface NavbarProps {
 const Navbar = ({ onLoginClick }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const { openRegistration } = useRegistration();
+  const { user } = useAuth();
+  const { isAdmin } = useAdminStatus(user?.id);
+
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
@@ -38,7 +43,17 @@ const Navbar = ({ onLoginClick }: NavbarProps) => {
             <Link to="/about" className="text-foreground/80 hover:text-primary transition-colors">
               À propos
             </Link>
+            {isAdmin && (
+              <Link
+                to="/admin/requests"
+                className="flex items-center gap-1 text-primary font-semibold hover:opacity-80 transition-opacity"
+              >
+                <Shield className="h-4 w-4" />
+                Admin
+              </Link>
+            )}
           </div>
+
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-3">
@@ -100,6 +115,17 @@ const Navbar = ({ onLoginClick }: NavbarProps) => {
               >
                 À propos
               </Link>
+              {isAdmin && (
+                <Link
+                  to="/admin/requests"
+                  className="flex items-center gap-1 text-primary font-semibold"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <Shield className="h-4 w-4" />
+                  Admin
+                </Link>
+              )}
+
               <button
                 onClick={() => {
                   setIsOpen(false);
