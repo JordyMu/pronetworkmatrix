@@ -6,6 +6,7 @@ import { Input } from "./ui/input";
 import { Dialog, DialogContent } from "./ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { logError } from "@/lib/logger";
 
 interface RegistrationModalProps {
   open: boolean;
