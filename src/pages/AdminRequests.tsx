@@ -202,6 +202,10 @@ const AdminRequests = () => {
             </a>
           </div>
           <div className="flex items-center gap-4">
+            <Button variant="outline" size="sm" onClick={() => navigate("/admin/members")} aria-label="Voir les membres inscrits">
+              <Users className="h-4 w-4 mr-2" />
+              Membres
+            </Button>
             <Button variant="outline" size="sm" onClick={() => navigate("/dashboard")}>
               <ArrowLeft className="h-4 w-4 mr-2" />
               Dashboard
