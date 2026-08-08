@@ -174,15 +174,39 @@ const AdminMembers = () => {
 
         <Card className="mb-6">
           <CardContent className="pt-6">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Rechercher par nom, email ou téléphone…"
-                className="pl-9"
-                aria-label="Rechercher un membre"
-              />
+            <div className="grid gap-4 md:grid-cols-3">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Rechercher par nom, email ou téléphone…"
+                  className="pl-9"
+                  aria-label="Rechercher un membre"
+                />
+              </div>
+              <Select value={levelFilter} onValueChange={(v) => setLevelFilter(v as typeof levelFilter)}>
+                <SelectTrigger aria-label="Filtrer par niveau">
+                  <Filter className="h-4 w-4 mr-2 text-muted-foreground" />
+                  <SelectValue placeholder="Niveau" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Tous les niveaux</SelectItem>
+                  <SelectItem value="1-4">Niveau 1-4 (2×2)</SelectItem>
+                  <SelectItem value="5-7">Niveau 5-7 (2×3)</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={matrixFilter} onValueChange={(v) => setMatrixFilter(v as typeof matrixFilter)}>
+                <SelectTrigger aria-label="Filtrer par matrice">
+                  <Filter className="h-4 w-4 mr-2 text-muted-foreground" />
+                  <SelectValue placeholder="Matrice" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Toutes les matrices</SelectItem>
+                  <SelectItem value="2x2">Matrice 2×2</SelectItem>
+                  <SelectItem value="2x3">Matrice 2×3</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </CardContent>
         </Card>
