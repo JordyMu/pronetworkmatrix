@@ -223,13 +223,17 @@ const AdminMembers = () => {
             {filtered.map((m) => {
               const sponsor = m.referred_by ? byId[m.referred_by] : null;
               const referrals = childrenOf[m.id] || [];
+              const level = memberLevels[m.id] || 1;
+              const matrixType = level >= 1 && level <= 4 ? "2×2" : "2×3";
               return (
                 <Card key={m.id}>
                   <CardHeader className="pb-3">
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <CardTitle className="text-lg">{m.full_name}</CardTitle>
-                      <div className="flex items-center gap-2">
-                        {m.position && <Badge variant="secondary">{m.position}</Badge>}
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <Badge variant="default" className="bg-primary/90">Niveau {level}</Badge>
+                        <Badge variant="secondary">Matrice {matrixType}</Badge>
+                        {m.position && <Badge variant="outline">{m.position}</Badge>}
                         <Badge variant="outline">
                           {referrals.length} filleul{referrals.length !== 1 ? "s" : ""}
                         </Badge>
