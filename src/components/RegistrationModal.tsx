@@ -55,33 +55,19 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
 
     setEpinChecking(true);
     try {
-      const { data, error } = await supabase
-        .from("e_pins")
-        .select("id, is_used, expires_at")
-        .eq("code", formData.epin.toUpperCase())
-        .maybeSingle();
+      const { data, error } = await supabase.rpc("check_epin_validity", {
+        epin_code: formData.epin.toUpperCase(),
+      });
 
       if (error) {
-        console.error("Error checking e-pin:", error);
+        logError("Error checking e-pin", error);
         toast.error("Erreur lors de la vérification du code");
         setEpinValid(false);
         return;
       }
 
       if (!data) {
-        toast.error("Code e-pin invalide");
-        setEpinValid(false);
-        return;
-      }
-
-      if (data.is_used) {
-        toast.error("Ce code e-pin a déjà été utilisé");
-        setEpinValid(false);
-        return;
-      }
-
-      if (data.expires_at && new Date(data.expires_at) < new Date()) {
-        toast.error("Ce code e-pin a expiré");
+        toast.error("Code e-pin invalide, déjà utilisé ou expiré");
         setEpinValid(false);
         return;
       }
@@ -89,7 +75,7 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
       toast.success("Code e-pin valide!");
       setEpinValid(true);
     } catch (error) {
-      console.error("Error:", error);
+      logError("Error checking e-pin", error);
       toast.error("Erreur de connexion");
       setEpinValid(false);
     } finally {
@@ -97,16 +83,27 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
     }
   };
 
+  // Escape LIKE/ILIKE wildcards so users can't broaden the search with % or _
+  const escapeLikePattern = (input: string) => input.replace(/[\\%_]/g, "\\$&");
+
   const findReferrer = async () => {
-    if (!formData.referralUsername) return;
-    
+    const term = formData.referralUsername.trim();
+    if (term.length < 2) {
+      toast.error("Entrez au moins 2 caractères pour rechercher un parrain");
+      return;
+    }
+    if (term.length > 100) {
+      toast.error("Nom de parrain trop long");
+      return;
+    }
+
     const { data } = await supabase
       .from("profiles")
       .select("id, full_name")
-      .ilike("full_name", `%${formData.referralUsername}%`)
+      .ilike("full_name", `%${escapeLikePattern(term)}%`)
       .limit(1)
-      .single();
-    
+      .maybeSingle();
+
     if (data) {
       setReferrerProfile(data);
       toast.success(`Parrain trouvé: ${data.full_name}`);
