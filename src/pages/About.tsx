@@ -28,8 +28,8 @@ const AboutContent = () => {
   return (
     <div className="min-h-screen bg-background">
       <Seo
-        title="À propos de ProNetwork — Revenu Communautaire"
-        description="Découvrez le modèle de revenu communautaire de ProNetwork : fonctionnement, exemples de coopératives, avantages et enjeux de la mise en commun des ressources."
+        title="À propos de UNITICASH — Revenu Communautaire"
+        description="Découvrez le modèle de revenu communautaire de UNITICASH : fonctionnement, exemples de coopératives, avantages et enjeux de la mise en commun des ressources."
         path="/about"
         jsonLd={{
           "@context": "https://schema.org",
@@ -37,8 +37,8 @@ const AboutContent = () => {
           headline: "Plateforme de Revenu Communautaire",
           about: "Modèle de revenu communautaire et coopératives de services",
           inLanguage: "fr",
-          publisher: { "@type": "Organization", name: "ProNetwork" },
-          mainEntityOfPage: "https://pronetworkmatrix.lovable.app/about",
+          publisher: { "@type": "Organization", name: "UNITICASH" },
+          mainEntityOfPage: "https://uniticash.lovable.app/about",
         }}
       />
       <Navbar onLoginClick={() => setLoginOpen(true)} />

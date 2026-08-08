@@ -198,7 +198,7 @@ const AdminRequests = () => {
           <div className="flex items-center gap-4">
             <a href="/" className="flex items-center space-x-2">
               <Crown className="h-8 w-8 text-primary" />
-              <span className="text-xl font-serif font-bold text-gradient-gold">ProNetwork</span>
+              <span className="text-xl font-serif font-bold text-gradient-gold">UNITICASH</span>
             </a>
           </div>
           <div className="flex items-center gap-4">

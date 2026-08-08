@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://pronetworkmatrix.lovable.app/sitemap.xml
+Sitemap: https://uniticash.lovable.app/sitemap.xml

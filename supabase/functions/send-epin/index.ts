@@ -68,12 +68,12 @@ Deno.serve(async (req) => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "ProNetwork <onboarding@resend.dev>",
+        from: "UNITICASH <onboarding@resend.dev>",
         to: [request.email],
-        subject: "Votre E-PIN ProNetwork",
+        subject: "Votre E-PIN UNITICASH",
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-            <h1 style="color: #d4af37; text-align: center;">Bienvenue chez ProNetwork!</h1>
+            <h1 style="color: #d4af37; text-align: center;">Bienvenue chez UNITICASH!</h1>
             <p>Bonjour <strong>${request.full_name}</strong>,</p>
             <p>Votre demande d'adhésion a été <strong>approuvée</strong>! Voici votre E-PIN pour vous inscrire :</p>
             <div style="background: #1a1a2e; color: #d4af37; padding: 20px; text-align: center; border-radius: 8px; margin: 20px 0;">

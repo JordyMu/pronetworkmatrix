@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 
-const SITE_URL = "https://pronetworkmatrix.lovable.app";
+const SITE_URL = "https://uniticash.lovable.app";
 
 interface SeoProps {
   title: string;

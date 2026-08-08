@@ -10,7 +10,7 @@ const Footer = () => {
           <div className="flex items-center gap-2">
             <Crown className="h-6 w-6 text-primary" />
             <span className="text-lg font-serif font-bold text-gradient-gold">
-              ProNetwork
+              UNITICASH
             </span>
           </div>
 
@@ -32,7 +32,7 @@ const Footer = () => {
 
           {/* Copyright */}
           <div className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} ProNetwork. Tous droits réservés.
+            © {new Date().getFullYear()} UNITICASH. Tous droits réservés.
           </div>
         </div>
       </div>

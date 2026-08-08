@@ -195,7 +195,7 @@ const CompensationPlan = () => {
             <span className="text-sm text-primary font-medium">Système à 7 Générations</span>
           </div>
           <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">
-            Plan de <span className="text-gradient-gold">Compensation</span> ProNetwork
+            Plan de <span className="text-gradient-gold">Compensation</span> UNITICASH
           </h1>
 
           <p className="text-lg text-muted-foreground">

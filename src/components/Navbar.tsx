@@ -25,7 +25,7 @@ const Navbar = ({ onLoginClick }: NavbarProps) => {
           <a href="#" className="flex items-center gap-2">
             <Crown className="h-8 w-8 text-primary" />
             <span className="text-xl font-serif font-bold text-gradient-gold">
-              ProNetwork
+              UNITICASH
             </span>
           </a>
 

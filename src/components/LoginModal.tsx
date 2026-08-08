@@ -63,7 +63,7 @@ const LoginModal = ({ open, onOpenChange, onSwitchToRegister }: LoginModalProps)
           <div className="text-center mb-8">
             <Crown className="h-12 w-12 text-primary mx-auto mb-4" />
             <h2 className="text-3xl font-serif font-bold text-gradient-gold">
-              PRONETWORK
+              UNITICASH
             </h2>
             <p className="text-muted-foreground mt-2">Connectez-vous à votre compte</p>
           </div>

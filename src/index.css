@@ -4,7 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ProNetwork Design System - Luxurious Gold & Navy Theme */
+/* UNITICASH Design System - Luxurious Gold & Navy Theme */
 
 @layer base {
   :root {
@@ -38,7 +38,7 @@
 
     --radius: 0.75rem;
 
-    /* Custom ProNetwork tokens */
+    /* Custom UNITICASH tokens */
     --gold: 42 85% 55%;
     --gold-light: 42 100% 70%;
     --gold-dark: 38 80% 40%;
