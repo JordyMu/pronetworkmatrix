@@ -30,6 +30,8 @@ const AdminMembers = () => {
   const [members, setMembers] = useState<Profile[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [query, setQuery] = useState("");
+  const [levelFilter, setLevelFilter] = useState<"all" | "1-4" | "5-7">("all");
+  const [matrixFilter, setMatrixFilter] = useState<"all" | "2x2" | "2x3">("all");
 
   useEffect(() => {
     if (!loading && !isAuthenticated) navigate("/");
