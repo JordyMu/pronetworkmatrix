@@ -6,6 +6,7 @@ import { Input } from "./ui/input";
 import { Dialog, DialogContent } from "./ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { logError } from "@/lib/logger";
 
 interface RegistrationModalProps {
   open: boolean;
@@ -54,33 +55,19 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
 
     setEpinChecking(true);
     try {
-      const { data, error } = await supabase
-        .from("e_pins")
-        .select("id, is_used, expires_at")
-        .eq("code", formData.epin.toUpperCase())
-        .maybeSingle();
+      const { data, error } = await supabase.rpc("check_epin_validity", {
+        epin_code: formData.epin.toUpperCase(),
+      });
 
       if (error) {
-        console.error("Error checking e-pin:", error);
+        logError("Error checking e-pin", error);
         toast.error("Erreur lors de la vérification du code");
         setEpinValid(false);
         return;
       }
 
       if (!data) {
-        toast.error("Code e-pin invalide");
-        setEpinValid(false);
-        return;
-      }
-
-      if (data.is_used) {
-        toast.error("Ce code e-pin a déjà été utilisé");
-        setEpinValid(false);
-        return;
-      }
-
-      if (data.expires_at && new Date(data.expires_at) < new Date()) {
-        toast.error("Ce code e-pin a expiré");
+        toast.error("Code e-pin invalide, déjà utilisé ou expiré");
         setEpinValid(false);
         return;
       }
@@ -88,7 +75,7 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
       toast.success("Code e-pin valide!");
       setEpinValid(true);
     } catch (error) {
-      console.error("Error:", error);
+      logError("Error checking e-pin", error);
       toast.error("Erreur de connexion");
       setEpinValid(false);
     } finally {
@@ -96,16 +83,27 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
     }
   };
 
+  // Escape LIKE/ILIKE wildcards so users can't broaden the search with % or _
+  const escapeLikePattern = (input: string) => input.replace(/[\\%_]/g, "\\$&");
+
   const findReferrer = async () => {
-    if (!formData.referralUsername) return;
-    
+    const term = formData.referralUsername.trim();
+    if (term.length < 2) {
+      toast.error("Entrez au moins 2 caractères pour rechercher un parrain");
+      return;
+    }
+    if (term.length > 100) {
+      toast.error("Nom de parrain trop long");
+      return;
+    }
+
     const { data } = await supabase
       .from("profiles")
       .select("id, full_name")
-      .ilike("full_name", `%${formData.referralUsername}%`)
+      .ilike("full_name", `%${escapeLikePattern(term)}%`)
       .limit(1)
-      .single();
-    
+      .maybeSingle();
+
     if (data) {
       setReferrerProfile(data);
       toast.success(`Parrain trouvé: ${data.full_name}`);
@@ -159,8 +157,12 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
       });
 
       if (authError) {
-        console.error("Auth error:", authError);
-        toast.error(authError.message);
+        logError("Auth error", authError);
+        toast.error(
+          authError.message?.toLowerCase().includes("already registered")
+            ? "Un compte existe déjà avec cet email"
+            : "Impossible de créer le compte. Vérifiez vos informations."
+        );
         return;
       }
 
@@ -183,7 +185,7 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
       });
 
       if (profileError) {
-        console.error("Profile error:", profileError);
+        logError("Profile error", profileError);
         toast.error("Erreur lors de la création du profil");
         return;
       }
@@ -191,7 +193,7 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
       toast.success("Inscription réussie! Veuillez vérifier votre email pour confirmer votre compte.");
       onOpenChange(false);
     } catch (error) {
-      console.error("Registration error:", error);
+      logError("Registration error", error);
       toast.error("Erreur lors de l'inscription");
     } finally {
       setIsLoading(false);

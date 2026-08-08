@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { User, Session } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
+import { logError } from "@/lib/logger";
 
 interface Profile {
   id: string;
@@ -32,11 +33,11 @@ export const useAuth = () => {
           .single();
 
         if (error && error.code !== "PGRST116") {
-          console.error("Error fetching profile:", error);
+          logError("Error fetching profile", error);
         }
         if (isMounted) setProfile(data);
       } catch (error) {
-        console.error("Error:", error);
+        logError("Error fetching profile", error);
       }
     };
 

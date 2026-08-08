@@ -159,6 +159,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      check_epin_validity: { Args: { epin_code: string }; Returns: boolean }
       create_profile_on_signup: {
         Args: {
           p_email: string
