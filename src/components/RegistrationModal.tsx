@@ -217,7 +217,7 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
                 BIENVENUE SUR
               </p>
               <h2 className="text-4xl md:text-5xl font-serif font-bold text-gradient-gold mb-4">
-                PRONETWORK
+                UNITICASH
               </h2>
               <div className="w-16 h-1 bg-primary mx-auto mb-4" />
               <p className="text-lg text-primary font-medium">
@@ -246,7 +246,7 @@ const RegistrationModal = ({ open, onOpenChange, onSwitchToLogin }: Registration
             <div className="md:hidden text-center mb-6">
               <Crown className="h-10 w-10 text-primary mx-auto mb-2" />
               <h2 className="text-2xl font-serif font-bold text-gradient-gold">
-                PRONETWORK
+                UNITICASH
               </h2>
             </div>
 

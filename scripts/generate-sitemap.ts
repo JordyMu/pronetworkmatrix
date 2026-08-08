@@ -3,7 +3,7 @@
 import { writeFileSync } from "fs"
 import { resolve } from "path"
 
-const BASE_URL = "https://pronetworkmatrix.lovable.app"
+const BASE_URL = "https://uniticash.lovable.app"
 
 interface SitemapEntry {
   path: string

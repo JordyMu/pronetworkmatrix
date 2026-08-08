@@ -40,23 +40,23 @@ const IndexContent = () => {
   return (
     <div className="min-h-screen bg-background">
       <Seo
-        title="ProNetwork — Plateforme de Revenu Communautaire"
-        description="ProNetwork : plateforme de revenu communautaire à 7 générations. Rejoignez le réseau, développez votre matrice et vos revenus en CDF."
+        title="UNITICASH — Plateforme de Revenu Communautaire"
+        description="UNITICASH : plateforme de revenu communautaire à 7 générations. Rejoignez le réseau, développez votre matrice et vos revenus en CDF."
         path="/"
         jsonLd={[
           {
             "@context": "https://schema.org",
             "@type": "Organization",
-            name: "ProNetwork",
-            url: "https://pronetworkmatrix.lovable.app/",
+            name: "UNITICASH",
+            url: "https://uniticash.lovable.app/",
             description:
               "Plateforme de revenu communautaire basée sur un système de matrice à 7 générations.",
           },
           {
             "@context": "https://schema.org",
             "@type": "WebSite",
-            name: "ProNetwork",
-            url: "https://pronetworkmatrix.lovable.app/",
+            name: "UNITICASH",
+            url: "https://uniticash.lovable.app/",
             inLanguage: "fr",
           },
         ]}

@@ -37,7 +37,7 @@ const JoinCTA = () => {
           {/* Description */}
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             Rejoignez des milliers de membres qui construisent déjà leur avenir
-            financier avec ProNetwork. Votre histoire de succès commence ici.
+            financier avec UNITICASH. Votre histoire de succès commence ici.
           </p>
 
           {/* Joining Fee Highlight */}
@@ -60,7 +60,7 @@ const JoinCTA = () => {
               onClick={openRegistration}
               className="bg-gradient-gold text-primary-foreground font-semibold text-lg px-10 py-7 shadow-gold hover:opacity-90 transition-all hover:scale-105"
             >
-              Rejoindre ProNetwork
+              Rejoindre UNITICASH
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Button

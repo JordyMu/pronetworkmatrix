@@ -5,7 +5,7 @@ const steps = [
     icon: Wallet,
     title: "Rejoindre le Réseau",
     description:
-      "Payez les frais d'adhésion minimaux et faites partie de la famille ProNetwork. Accédez instantanément à votre tableau de bord.",
+      "Payez les frais d'adhésion minimaux et faites partie de la famille UNITICASH. Accédez instantanément à votre tableau de bord.",
   },
   {
     icon: Users,
@@ -39,7 +39,7 @@ const HowItWorks = () => {
             Comment <span className="text-gradient-gold">Ça Marche</span>
           </h2>
           <p className="text-lg text-muted-foreground">
-            Commencer avec ProNetwork est simple. Suivez ces quatre étapes
+            Commencer avec UNITICASH est simple. Suivez ces quatre étapes
             pour débuter votre parcours vers le succès financier.
           </p>
         </div>

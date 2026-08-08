@@ -141,7 +141,7 @@ const AdminMembers = () => {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <a href="/" className="flex items-center space-x-2">
             <Crown className="h-8 w-8 text-primary" />
-            <span className="text-xl font-serif font-bold text-gradient-gold">ProNetwork</span>
+            <span className="text-xl font-serif font-bold text-gradient-gold">UNITICASH</span>
           </a>
           <div className="flex items-center gap-4">
             <Button variant="outline" size="sm" onClick={() => navigate("/admin/requests")} aria-label="Voir les demandes d'adhésion">

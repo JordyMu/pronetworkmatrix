@@ -24,17 +24,17 @@ const CompensationContent = () => {
   return (
     <div className="min-h-screen bg-background">
       <Seo
-        title="Plan de Compensation ProNetwork — 7 Générations"
-        description="Détail du plan de compensation ProNetwork : matrices 2x2 et 2x3, gains par génération en CDF et bonus associés à chaque niveau."
+        title="Plan de Compensation UNITICASH — 7 Générations"
+        description="Détail du plan de compensation UNITICASH : matrices 2x2 et 2x3, gains par génération en CDF et bonus associés à chaque niveau."
         path="/compensation"
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "Article",
-          headline: "Plan de Compensation ProNetwork",
+          headline: "Plan de Compensation UNITICASH",
           about: "Système de matrice à 7 générations et bonus",
           inLanguage: "fr",
-          publisher: { "@type": "Organization", name: "ProNetwork" },
-          mainEntityOfPage: "https://pronetworkmatrix.lovable.app/compensation",
+          publisher: { "@type": "Organization", name: "UNITICASH" },
+          mainEntityOfPage: "https://uniticash.lovable.app/compensation",
         }}
       />
       <Navbar onLoginClick={() => setLoginOpen(true)} />
