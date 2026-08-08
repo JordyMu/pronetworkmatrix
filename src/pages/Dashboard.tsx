@@ -8,6 +8,7 @@ import { useNetworkStats } from "@/hooks/useNetworkStats";
 import { useAdminStatus } from "@/hooks/useAdminStatus";
 import NetworkTree from "@/components/dashboard/NetworkTree";
 import GenerationStats from "@/components/dashboard/GenerationStats";
+import Seo from "@/components/Seo";
 import { toast } from "sonner";
 
 const Dashboard = () => {
@@ -52,6 +53,12 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-dark">
+      <Seo
+        title="Tableau de Bord — UNITICASH"
+        description="Espace membre UNITICASH : suivez votre réseau, vos générations et vos gains en francs congolais depuis votre tableau de bord personnel."
+        path="/dashboard"
+        noindex
+      />
       {/* Header */}
       <header className="border-b border-border/50 bg-background/80 backdrop-blur sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -116,6 +123,7 @@ const Dashboard = () => {
         </div>
 
         {/* Stats Cards */}
+        <h2 className="text-xl font-serif font-semibold mb-4">Vue d'ensemble</h2>
         <div className="grid gap-6 md:grid-cols-3 mb-8">
           <Card className="border-primary/20 bg-card/50 backdrop-blur">
             <CardHeader className="pb-2">

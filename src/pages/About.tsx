@@ -31,6 +31,7 @@ const AboutContent = () => {
         title="À propos de UNITICASH — Revenu Communautaire"
         description="Découvrez le modèle de revenu communautaire de UNITICASH : fonctionnement, exemples de coopératives, avantages et enjeux de la mise en commun des ressources."
         path="/about"
+        ogType="article"
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "Article",

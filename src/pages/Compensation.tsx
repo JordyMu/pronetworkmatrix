@@ -27,6 +27,7 @@ const CompensationContent = () => {
         title="Plan de Compensation UNITICASH — 7 Générations"
         description="Détail du plan de compensation UNITICASH : matrices 2x2 et 2x3, gains par génération en CDF et bonus associés à chaque niveau."
         path="/compensation"
+        ogType="article"
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "Article",
