@@ -6,6 +6,7 @@ import { Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import AdminRequests from "./pages/AdminRequests";
+import AdminMembers from "./pages/AdminMembers";
 import NotFound from "./pages/NotFound";
 import Compensation from "./pages/Compensation";
 import About from "./pages/About";
