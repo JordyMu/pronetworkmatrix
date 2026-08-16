@@ -232,7 +232,7 @@ const CompensationPlan = () => {
           <div className="inline-flex items-center gap-3 p-4 rounded-2xl bg-gradient-card border border-primary/30">
             <Zap className="h-6 w-6 text-primary" />
             <span className="text-foreground">
-              <strong className="text-gradient-gold">Frais d'Adhésion :</strong> Seulement 5,000 CDF pour commencer !
+              <strong className="text-gradient-gold">Frais d'Adhésion :</strong> Seulement 10,000 CDF pour commencer !
             </span>
             <Award className="h-6 w-6 text-primary" />
           </div>
