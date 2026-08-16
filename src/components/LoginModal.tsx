@@ -16,6 +16,24 @@ const LoginModal = ({ open, onOpenChange, onSwitchToRegister }: LoginModalProps)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isResetting, setIsResetting] = useState(false);
+
+  const handleForgotPassword = async () => {
+    if (!email) {
+      toast.error("Entrez d'abord votre email, puis cliquez à nouveau");
+      return;
+    }
+    setIsResetting(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    setIsResetting(false);
+    if (error) {
+      toast.error("Impossible d'envoyer l'email de réinitialisation");
+      return;
+    }
+    toast.success("Email de réinitialisation envoyé ! Vérifiez votre boîte de réception.");
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -97,6 +115,17 @@ const LoginModal = ({ open, onOpenChange, onSwitchToRegister }: LoginModalProps)
                 className="bg-background/50 border-border/50 focus:border-primary"
                 required
               />
+            </div>
+
+            <div className="text-right">
+              <button
+                type="button"
+                onClick={handleForgotPassword}
+                disabled={isResetting}
+                className="text-xs text-primary hover:underline font-semibold"
+              >
+                {isResetting ? "Envoi..." : "Mot de passe oublié ?"}
+              </button>
             </div>
 
             <div className="flex gap-4 pt-4">
