@@ -44,7 +44,7 @@ const GenerationStats = ({ stats, totalRewards, isLoading }: GenerationStatsProp
   const rewardsPerGen: Record<number, number> = {
     1: 250,
     2: 500,
-    3: 3000,
+    3: 1000,
     4: 10000,
     5: 20000,
     6: 40000,
