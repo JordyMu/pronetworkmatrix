@@ -42,7 +42,7 @@ const GenerationStats = ({ stats, totalRewards, isLoading }: GenerationStatsProp
 
   const allGenerations = [1, 2, 3, 4, 5, 6, 7];
   const rewardsPerGen: Record<number, number> = {
-    1: 500,
+    1: 250,
     2: 1000,
     3: 3000,
     4: 10000,
