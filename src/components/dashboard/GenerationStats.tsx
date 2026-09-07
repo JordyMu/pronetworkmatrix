@@ -45,7 +45,7 @@ const GenerationStats = ({ stats, totalRewards, isLoading }: GenerationStatsProp
     1: 250,
     2: 500,
     3: 1000,
-    4: 10000,
+    4: 1750,
     5: 20000,
     6: 40000,
     7: 80000,
