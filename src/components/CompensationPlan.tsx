@@ -156,9 +156,9 @@ const CompensationPlan = () => {
       name: "Commerçant",
       matrixType: "2x3" as const,
       description: "Tu gagnes sur les premiers 14 membres enregistrés sous ton arbre de génération qui te rejoignent au cinquième niveau.",
-      perMember: "20,000.00 CDF",
-      calculation: "20,000.00 CDF × 14",
-      totalEarnings: "280,000.00 CDF",
+      perMember: "5,000.00 CDF",
+      calculation: "5,000.00 CDF × 14",
+      totalEarnings: "70,000.00 CDF",
       bonuses: ["Décodeur", "Jeux des casseroles"],
     },
     {
