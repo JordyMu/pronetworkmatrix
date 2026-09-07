@@ -146,9 +146,9 @@ const CompensationPlan = () => {
       name: "Marchand",
       matrixType: "2x2" as const,
       description: "Tu gagnes sur les premiers 6 membres enregistrés sous ton arbre qui te rejoignent au quatrième niveau.",
-      perMember: "10,000.00 CDF",
-      calculation: "10,000.00 CDF × 6",
-      totalEarnings: "60,000.00 CDF",
+      perMember: "1,750.00 CDF",
+      calculation: "1,750.00 CDF × 6",
+      totalEarnings: "10,500.00 CDF",
       bonuses: ["Téléphone Androïde", "Frais scolaires/Minerval : 150.000 CDF"],
     },
     {
