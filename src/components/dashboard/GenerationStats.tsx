@@ -48,7 +48,7 @@ const GenerationStats = ({ stats, totalRewards, isLoading }: GenerationStatsProp
     4: 1750,
     5: 5000,
     6: 10000,
-    7: 80000,
+    7: 20000,
   };
 
   return (
