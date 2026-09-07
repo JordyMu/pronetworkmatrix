@@ -125,9 +125,9 @@ const CompensationPlan = () => {
       name: "Laboureur",
       matrixType: "2x2" as const,
       description: "Tu gagnes sur les 6 membres enregistrés sous ton arbre qui te rejoignent au deuxième niveau.",
-      perMember: "1,000.00 CDF",
-      calculation: "1,000.00 CDF × 6",
-      totalEarnings: "6,000.00 CDF",
+      perMember: "500.00 CDF",
+      calculation: "500.00 CDF × 6",
+      totalEarnings: "3,000.00 CDF",
       bonuses: [],
     },
     {
