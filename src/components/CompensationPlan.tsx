@@ -115,9 +115,9 @@ const CompensationPlan = () => {
       name: "Semeur",
       matrixType: "2x2" as const,
       description: "Réfère deux (2) personnes. Enseigne ces deux personnes à emmener leurs 2 personnes chacune.",
-      perMember: "500.00 CDF",
-      calculation: "500.00 CDF × 6",
-      totalEarnings: "3,000.00 CDF",
+      perMember: "250.00 CDF",
+      calculation: "250.00 CDF × 6",
+      totalEarnings: "1,500.00 CDF",
       bonuses: [],
     },
     {
