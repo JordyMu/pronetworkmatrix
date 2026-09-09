@@ -169,7 +169,7 @@ const CompensationPlan = () => {
       perMember: "10,000.00 CDF",
       calculation: "10,000.00 CDF × 14",
       totalEarnings: "140,000.00 CDF",
-      bonuses: ["Kit solaire"],
+      bonuses: ["Accès à la génération UNITICASH NEXT GENERATION 10$"],
     },
     {
       level: 7,
