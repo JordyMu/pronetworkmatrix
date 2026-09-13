@@ -54,8 +54,9 @@ const GenerationProgress = ({ stats, isLoading }: GenerationProgressProps) => {
   const currentGeneration = getCurrentGeneration(stats);
   const currentCount =
     stats.find((s) => s.generation === currentGeneration)?.member_count || 0;
-  const remaining = Math.max(REQUIRED_PER_GENERATION - currentCount, 0);
-  const percent = Math.min((currentCount / REQUIRED_PER_GENERATION) * 100, 100);
+  const requiredForCurrent = REQUIRED_PER_GENERATION[currentGeneration];
+  const remaining = Math.max(requiredForCurrent - currentCount, 0);
+  const percent = Math.min((currentCount / requiredForCurrent) * 100, 100);
   const isMax = currentGeneration >= MAX_GENERATION && remaining === 0;
 
   return (
