@@ -92,6 +92,30 @@ const AdminMembers = () => {
     return levels;
   }, [members, childrenOf]);
 
+  const REWARD_BY_GENERATION: Record<number, number> = {
+    1: 250, 2: 500, 3: 1000, 4: 1750, 5: 5000, 6: 10000, 7: 20000,
+  };
+
+  const memberEarnings = useMemo(() => {
+    const earnings: Record<string, { total: number; networkSize: number }> = {};
+    members.forEach((m) => {
+      let total = 0;
+      let networkSize = 0;
+      const queue: { id: string; gen: number }[] = (childrenOf[m.id] || []).map((c) => ({ id: c.id, gen: 1 }));
+      const visited = new Set<string>();
+      while (queue.length > 0) {
+        const { id, gen } = queue.shift()!;
+        if (visited.has(id) || gen > 7) continue;
+        visited.add(id);
+        networkSize++;
+        total += REWARD_BY_GENERATION[gen] || 0;
+        (childrenOf[id] || []).forEach((c) => queue.push({ id: c.id, gen: gen + 1 }));
+      }
+      earnings[m.id] = { total, networkSize };
+    });
+    return earnings;
+  }, [members, childrenOf]);
+
   const filtered = useMemo(() => {
     let result = members;
     const q = query.trim().toLowerCase();
@@ -225,6 +249,7 @@ const AdminMembers = () => {
               const referrals = childrenOf[m.id] || [];
               const level = memberLevels[m.id] || 1;
               const matrixType = level >= 1 && level <= 4 ? "2×2" : "2×3";
+              const earnings = memberEarnings[m.id] || { total: 0, networkSize: 0 };
               return (
                 <Card key={m.id}>
                   <CardHeader className="pb-3">
@@ -236,6 +261,9 @@ const AdminMembers = () => {
                         {m.position && <Badge variant="outline">{m.position}</Badge>}
                         <Badge variant="outline">
                           {referrals.length} filleul{referrals.length !== 1 ? "s" : ""}
+                        </Badge>
+                        <Badge variant="outline" className="border-primary/50 text-primary">
+                          Gains : {earnings.total.toLocaleString("fr-FR")} CDF
                         </Badge>
                       </div>
                     </div>
