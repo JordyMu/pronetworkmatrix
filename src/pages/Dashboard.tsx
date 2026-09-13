@@ -8,6 +8,7 @@ import { useNetworkStats } from "@/hooks/useNetworkStats";
 import { useAdminStatus } from "@/hooks/useAdminStatus";
 import NetworkTree from "@/components/dashboard/NetworkTree";
 import GenerationStats from "@/components/dashboard/GenerationStats";
+import GenerationProgress from "@/components/dashboard/GenerationProgress";
 import Seo from "@/components/Seo";
 import { toast } from "sonner";
 
@@ -201,6 +202,11 @@ const Dashboard = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* Generation Progress */}
+        <div className="mb-8">
+          <GenerationProgress stats={stats} isLoading={isLoading} />
+        </div>
 
         {/* Generation Stats */}
         <div className="mb-8">
