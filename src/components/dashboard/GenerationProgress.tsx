@@ -96,14 +96,10 @@ const GenerationProgress = ({ stats, isLoading }: GenerationProgressProps) => {
               {isMax
                 ? "Félicitations ! Vous avez atteint la dernière génération."
                 : remaining > 0
-                ? `Encore ${remaining} membre${remaining > 1 ? "s" : ""} pour passer à la Génération ${Math.min(
-                    currentGeneration + 1,
-                    MAX_GENERATION
-                  )}.`
-                : `Objectif atteint ! Vous passez à la Génération ${Math.min(
-                    currentGeneration + 1,
-                    MAX_GENERATION
-                  )}.`}
+                ? currentGeneration === MAX_GENERATION
+                  ? `Encore ${remaining} membre${remaining > 1 ? "s" : ""} pour compléter la Génération ${currentGeneration}.`
+                  : `Encore ${remaining} membre${remaining > 1 ? "s" : ""} pour passer à la Génération ${currentGeneration + 1}.`
+                : `Objectif atteint ! Vous passez à la Génération ${currentGeneration + 1}.`}
             </p>
           </div>
         )}
