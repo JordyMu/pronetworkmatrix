@@ -249,6 +249,7 @@ const AdminMembers = () => {
               const referrals = childrenOf[m.id] || [];
               const level = memberLevels[m.id] || 1;
               const matrixType = level >= 1 && level <= 4 ? "2×2" : "2×3";
+              const earnings = memberEarnings[m.id] || { total: 0, networkSize: 0 };
               return (
                 <Card key={m.id}>
                   <CardHeader className="pb-3">
