@@ -39,7 +39,8 @@ export const getCurrentGeneration = (stats: GenerationStat[]) => {
   let current = 1;
   for (let gen = 1; gen <= MAX_GENERATION; gen++) {
     const count = stats.find((s) => s.generation === gen)?.member_count || 0;
-    if (count >= REQUIRED_PER_GENERATION && gen < MAX_GENERATION) {
+    const required = REQUIRED_PER_GENERATION[gen];
+    if (count >= required && gen < MAX_GENERATION) {
       current = gen + 1;
     } else {
       current = gen;
