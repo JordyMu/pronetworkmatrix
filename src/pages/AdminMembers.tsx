@@ -262,6 +262,9 @@ const AdminMembers = () => {
                         <Badge variant="outline">
                           {referrals.length} filleul{referrals.length !== 1 ? "s" : ""}
                         </Badge>
+                        <Badge variant="outline" className="border-primary/50 text-primary">
+                          Gains : {earnings.total.toLocaleString("fr-FR")} CDF
+                        </Badge>
                       </div>
                     </div>
                   </CardHeader>
