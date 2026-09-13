@@ -86,7 +86,7 @@ const GenerationProgress = ({ stats, isLoading }: GenerationProgressProps) => {
                 </p>
               </div>
               <p className="text-sm text-muted-foreground">
-                {currentCount}/{REQUIRED_PER_GENERATION} membres
+                {currentCount}/{requiredForCurrent} membres
               </p>
             </div>
 
