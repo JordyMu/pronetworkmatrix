@@ -14,7 +14,15 @@ interface GenerationProgressProps {
   isLoading: boolean;
 }
 
-const REQUIRED_PER_GENERATION = 6;
+const REQUIRED_PER_GENERATION: Record<number, number> = {
+  1: 6,
+  2: 6,
+  3: 6,
+  4: 6,
+  5: 14,
+  6: 14,
+  7: 14,
+};
 const MAX_GENERATION = 7;
 
 const GENERATION_TITLES: Record<number, string> = {
