@@ -14,7 +14,15 @@ interface GenerationProgressProps {
   isLoading: boolean;
 }
 
-const REQUIRED_PER_GENERATION = 6;
+const REQUIRED_PER_GENERATION: Record<number, number> = {
+  1: 6,
+  2: 6,
+  3: 6,
+  4: 6,
+  5: 14,
+  6: 14,
+  7: 14,
+};
 const MAX_GENERATION = 7;
 
 const GENERATION_TITLES: Record<number, string> = {
@@ -31,7 +39,8 @@ export const getCurrentGeneration = (stats: GenerationStat[]) => {
   let current = 1;
   for (let gen = 1; gen <= MAX_GENERATION; gen++) {
     const count = stats.find((s) => s.generation === gen)?.member_count || 0;
-    if (count >= REQUIRED_PER_GENERATION && gen < MAX_GENERATION) {
+    const required = REQUIRED_PER_GENERATION[gen];
+    if (count >= required && gen < MAX_GENERATION) {
       current = gen + 1;
     } else {
       current = gen;
@@ -45,8 +54,9 @@ const GenerationProgress = ({ stats, isLoading }: GenerationProgressProps) => {
   const currentGeneration = getCurrentGeneration(stats);
   const currentCount =
     stats.find((s) => s.generation === currentGeneration)?.member_count || 0;
-  const remaining = Math.max(REQUIRED_PER_GENERATION - currentCount, 0);
-  const percent = Math.min((currentCount / REQUIRED_PER_GENERATION) * 100, 100);
+  const requiredForCurrent = REQUIRED_PER_GENERATION[currentGeneration];
+  const remaining = Math.max(requiredForCurrent - currentCount, 0);
+  const percent = Math.min((currentCount / requiredForCurrent) * 100, 100);
   const isMax = currentGeneration >= MAX_GENERATION && remaining === 0;
 
   return (
@@ -76,7 +86,7 @@ const GenerationProgress = ({ stats, isLoading }: GenerationProgressProps) => {
                 </p>
               </div>
               <p className="text-sm text-muted-foreground">
-                {currentCount}/{REQUIRED_PER_GENERATION} membres
+                {currentCount}/{requiredForCurrent} membres
               </p>
             </div>
 
@@ -86,14 +96,10 @@ const GenerationProgress = ({ stats, isLoading }: GenerationProgressProps) => {
               {isMax
                 ? "Félicitations ! Vous avez atteint la dernière génération."
                 : remaining > 0
-                ? `Encore ${remaining} membre${remaining > 1 ? "s" : ""} pour passer à la Génération ${Math.min(
-                    currentGeneration + 1,
-                    MAX_GENERATION
-                  )}.`
-                : `Objectif atteint ! Vous passez à la Génération ${Math.min(
-                    currentGeneration + 1,
-                    MAX_GENERATION
-                  )}.`}
+                ? currentGeneration === MAX_GENERATION
+                  ? `Encore ${remaining} membre${remaining > 1 ? "s" : ""} pour compléter la Génération ${currentGeneration}.`
+                  : `Encore ${remaining} membre${remaining > 1 ? "s" : ""} pour passer à la Génération ${currentGeneration + 1}.`
+                : `Objectif atteint ! Vous passez à la Génération ${currentGeneration + 1}.`}
             </p>
           </div>
         )}
